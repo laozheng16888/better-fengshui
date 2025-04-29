@@ -132,5 +132,11 @@ function getElementTraits(element) {
 
 // 支付跳转
 function redirectToPayment() {
-  window.location.href = `/products/full-fengshui-destiny-report?redirect=${encodeURIComponent(window.fullReportLink)}`;
+  const name = encodeURIComponent(document.getElementById("fullname").value);
+  const birthdate = encodeURIComponent(document.getElementById("birthdate").value);
+  const birthtime = encodeURIComponent(document.getElementById("birthtime").value);
+  const birthplace = encodeURIComponent(document.getElementById("birthplace").value);
+
+  const url = `/checkout.html?name=${name}&birthdate=${birthdate}&birthtime=${birthtime}&birthplace=${birthplace}`;
+  window.location.href = url;
 }
