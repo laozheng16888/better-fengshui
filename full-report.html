@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>完整版风水报告</title>
+</head>
+<body>
+  <h2>🧧 您的完整版风水命理解读</h2>
+
+  <div id="user-info"></div>
+
+  <div id="full-report-content">
+    <p>📌 正在为您生成个性化命理内容...</p>
+    <!-- 这里未来会插入复杂报告 -->
+  </div>
+
+  <script>
+    function getParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: params.get("name") || "未知姓名",
+        birthdate: params.get("birthdate") || "未填写",
+        birthtime: params.get("birthtime") || "未填写",
+        birthplace: params.get("birthplace") || "未填写"
+      };
+    }
+
+    const user = getParams();
+    document.getElementById("user-info").innerHTML = `
+      <p><strong>姓名：</strong> ${user.name}</p>
+      <p><strong>出生日期：</strong> ${user.birthdate}</p>
+      <p><strong>出生时间：</strong> ${user.birthtime}</p>
+      <p><strong>出生地点：</strong> ${user.birthplace}</p>
+    `;
+
+    // TODO：后续你可调用 JS 计算八字并生成完整内容
+  </script>
+</body>
+</html>
