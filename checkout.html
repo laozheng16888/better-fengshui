@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>购买完整版风水报告</title>
+</head>
+<body>
+  <h2>完整版风水报告 ¥68 / $9.90</h2>
+  <p>请确认付款以解锁您的个性化完整版风水命理解读。</p>
+
+  <!-- PayPal支付按钮 -->
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="你的paypal邮箱@example.com">
+    <input type="hidden" name="item_name" value="完整版风水命理报告">
+    <input type="hidden" name="amount" value="9.90">
+    <input type="hidden" name="currency_code" value="USD">
+    <input type="hidden" name="return" value="https://letter-fengshui.vercel.app/success.html">
+    <input type="submit" value="立即付款获取完整版报告">
+  </form>
+
+  <p>付款后系统将自动跳转查看完整版报告。</p>
+</body>
+</html>
