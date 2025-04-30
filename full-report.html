@@ -289,10 +289,12 @@
     }
 
     // Call all rendering modules
-    renderRadarChart(pillars.elements);
-    renderTrendChart(dominantElement);
-    renderLuckyColors(dominantElement);
-    renderPhilosophy();
+window.addEventListener('DOMContentLoaded', () => {
+  renderRadarChart(pillars.elements);
+  renderTrendChart(dominantElement);
+  renderLuckyColors(dominantElement);
+  renderPhilosophy();
+});
 
     // Advice blocks
     renderAdvice(dominantElement, "love");
