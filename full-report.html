@@ -266,6 +266,9 @@
       const elements = { Wood: 0, Fire: 0, Earth: 0, Metal: 0, Water: 0 };
       stems.forEach(s => { if (elementMap[s]) elements[elementMap[s]]++; });
 
+      console.log("🌈 stems =", stems);
+      console.log("🌿 elements =", elements);
+
       return { year, month, day, hour, elements, dayStem: day[0] };
     }
 
