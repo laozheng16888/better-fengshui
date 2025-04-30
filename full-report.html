@@ -91,12 +91,7 @@
       </div>
     </section>
     <!-- Page 2: Five Element Radar Chart -->
-    <section id="page2">
-      <h2>⚖️ Five Element Balance</h2>
-      <canvas id="elementChart"></canvas>
-    </section>
 
-    <!-- Page 3: Elemental Overview -->
     <section id="page3">
       <h2>📜 Elemental Personality Summary</h2>
       <div class="summary" id="element-summary">
@@ -283,7 +278,6 @@
     const dominantElement = Object.entries(pillars.elements).reduce((a, b) => b[1] > a[1] ? b : a)[0];
 
     // Entry points – real rendering logic will be added next
-    function renderRadarChart(elements) {}
     function renderTrendChart(dominant) {}
     function renderLuckyColors(dominant) {}
     function renderPhilosophy() {}
@@ -310,50 +304,6 @@ window.addEventListener('DOMContentLoaded', () => {
     renderAdvice(dominantElement, "health");
   </script>
 <script>
-  function renderRadarChart(elements) {
-  const ctx = document.getElementById("elementChart");
-
-  if (!ctx || !elements) {
-    console.warn("⚠️ Missing canvas or element data for radar chart.");
-    return;
-  }
-
-  const dataValues = [
-    elements.Wood || 0,
-    elements.Fire || 0,
-    elements.Earth || 0,
-    elements.Metal || 0,
-    elements.Water || 0
-  ];
-
-  new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: ["Wood", "Fire", "Earth", "Metal", "Water"],
-      datasets: [{
-        label: "Five Element Balance",
-        data: dataValues,
-        backgroundColor: "rgba(199,167,108,0.2)",
-        borderColor: "#c7a76c",
-        pointBackgroundColor: "#c7a76c",
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        r: {
-          min: 0,
-          max: 5,
-          ticks: {
-            stepSize: 1
-          }
-        }
-      }
-    }
-  });
-}
-
 
   function renderTrendChart(dominant) {
     const base = { Wood: 2, Fire: 3, Earth: 2, Metal: 3, Water: 2 }[dominant] || 2;
@@ -1670,7 +1620,6 @@ function renderAdvice(element, type) {
 
   // 执行所有模块渲染
 window.addEventListener('DOMContentLoaded', () => {
-  renderRadarChart(pillars.elements);
   renderTrendChart(dominantElement);
   renderLuckyColors(dominantElement);
   renderPhilosophy();
