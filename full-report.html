@@ -280,13 +280,11 @@
     }
 
     // Call all rendering modules
-window.addEventListener('DOMContentLoaded', () => {
-  renderRadarChart(pillars.elements);
-  renderTrendChart(dominantElement);
-  renderLuckyColors(dominantElement);
-  renderPhilosophy();
-});
-
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTrendChart(dominantElement);
+      renderLuckyColors(dominantElement);
+      renderPhilosophy();
+    });
 
     // Advice blocks
     renderAdvice(dominantElement, "love");
@@ -371,6 +369,7 @@ window.addEventListener('DOMContentLoaded', () => {
       quotes.map(q => `<p>${q}</p>`).join("");
   }
 </script>
+
 <script>
 function renderAdvice(element, type) {
   const adviceLib = {
@@ -1582,100 +1581,372 @@ function renderAdvice(element, type) {
     }, // end of health
     }; // end of adviceLib
 
-    // 显示建议内容（自动渲染至页面各区域）
-    const sectionIds = {
-      love: ["love-judgement", "love-strengths", "love-warnings", "love-solutions"],
-      family: ["family-judgement", "family-strengths", "family-warnings", "family-solutions"],
-      career: ["career-judgement", "career-strengths", "career-warnings", "career-solutions"],
-      wealth: ["wealth-judgement", "wealth-strengths", "wealth-warnings", "wealth-solutions"],
-      health: ["health-judgement", "health-strengths", "health-warnings", "health-solutions"]
-    };
-
-    const ids = sectionIds[type];
-    const lib = adviceLib[type]?.[element];
-
-    if (!lib) {
-      ids.forEach(id => document.getElementById(id).innerText = "Insights coming soon...");
-      return;
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Full Feng Shui Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      padding: 0 20px;
     }
-
-    const renderList = (arr, id) => {
-      const html = arr.map((line, i) => `<p>${i + 1}. ${line}</p>`).join("");
-      document.getElementById(id).innerHTML = html;
-    };
-
-    renderList(lib.judgement, ids[0]);
-    renderList(lib.strengths, ids[1]);
-    renderList(lib.warnings, ids[2]);
-    renderList(lib.solutions, ids[3]);
-  }
-
-  // 执行所有模块渲染
-window.addEventListener('DOMContentLoaded', () => {
-  renderTrendChart(dominantElement);
-  renderLuckyColors(dominantElement);
-  renderPhilosophy();
-
-  renderAdvice(dominantElement, "love");
-  renderAdvice(dominantElement, "family");
-  renderAdvice(dominantElement, "career");
-  renderAdvice(dominantElement, "wealth");
-  renderAdvice(dominantElement, "health");
-});
-
-
-  // 邮件发送逻辑
-  function sendReportToEmail() {
-    const email = document.getElementById("userEmail").value.trim();
-    if (!email || !email.includes("@")) {
-      document.getElementById("emailStatus").innerText = "⚠️ Please enter a valid email address.";
-      return;
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
     }
+    h1, h2 {
+      text-align: center;
+      color: #6b4f1b;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    section {
+      margin: 40px 0;
+    }
+    .pillars {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      font-size: 1.1rem;
+      padding: 10px 0;
+      background-color: #faf8f1;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .pillars div {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+      margin: 0 10px;
+      background-color: #f1f1f1;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .summary {
+      padding: 20px;
+      background: #fdf8f1;
+      border-left: 4px solid #c7a76c;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .multi-paragraph {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    .warning-banner {
+      background-color: #fff4e5;
+      border-left: 6px solid #e25822;
+      padding: 15px 20px;
+      margin: 30px 0;
+      font-weight: bold;
+      font-size: 16px;
+      color: #b03020;
+      text-align: center;
+    }
+    .section-header {
+      font-size: 1.8rem;
+      color: #6b4f1b;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .advice-block {
+      margin-bottom: 20px;
+    }
+    .advice-block h3 {
+      font-size: 1.4rem;
+      color: #7b552c;
+      margin-bottom: 10px;
+    }
+    .advice-block p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 600px) {
+      .pillars {
+        flex-direction: column;
+      }
+    }
+    input[type="email"] {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #7b552c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: auto;
+    }
+    button:hover {
+      background-color: #6a4519;
+    }
+    #emailStatus {
+      margin-top: 10px;
+      color: #b03020;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
 
-    const templateParams = {
-      user_name: userName,
-      birthdate: birthdate,
-      birthtime: birthtime,
-      birthplace: birthplace,
-      year_pillar: pillars.year,
-      month_pillar: pillars.month,
-      day_pillar: pillars.day,
-      hour_pillar: pillars.hour,
-      dominant_element: dominantElement,
-      element_summary: document.getElementById("element-summary").innerText,
-      love_advice: document.getElementById("love-judgement").innerText + "\n" +
-                   document.getElementById("love-strengths").innerText + "\n" +
-                   document.getElementById("love-warnings").innerText + "\n" +
-                   document.getElementById("love-solutions").innerText,
-      family_advice: document.getElementById("family-judgement").innerText + "\n" +
-                     document.getElementById("family-strengths").innerText + "\n" +
-                     document.getElementById("family-warnings").innerText + "\n" +
-                     document.getElementById("family-solutions").innerText,
-      career_advice: document.getElementById("career-judgement").innerText + "\n" +
-                     document.getElementById("career-strengths").innerText + "\n" +
-                     document.getElementById("career-warnings").innerText + "\n" +
-                     document.getElementById("career-solutions").innerText,
-      wealth_advice: document.getElementById("wealth-judgement").innerText + "\n" +
-                     document.getElementById("wealth-strengths").innerText + "\n" +
-                     document.getElementById("wealth-warnings").innerText + "\n" +
-                     document.getElementById("wealth-solutions").innerText,
-      health_advice: document.getElementById("health-judgement").innerText + "\n" +
-                     document.getElementById("health-strengths").innerText + "\n" +
-                     document.getElementById("health-warnings").innerText + "\n" +
-                     document.getElementById("health-solutions").innerText,
-      lucky_colors: document.getElementById("color-calendar").innerText,
-      philosophy: document.getElementById("philosophy-quote").innerText,
-      user_email: email
-    };
+    <!-- Top warning message about email -->
+    <div class="warning-banner">
+      ⚠️ Please make sure to enter your email at the end of this report. We will send a full copy to your inbox. Otherwise, you will not be able to view it again.
+    </div>
 
-    emailjs.send("service_t6fitnn", "template_2g3xle8", templateParams)
-      .then(() => {
-        document.getElementById("emailStatus").innerText = "✅ Report sent successfully. Please check your inbox.";
-      })
-      .catch(() => {
-        document.getElementById("emailStatus").innerText = "⚠️ Failed to send. Please try again later.";
-      });
-  }
-</script>
+    <!-- Page 1: Welcome + Four Pillars -->
+    <section id="page1">
+      <h1>Welcome, <span id="user-name">Friend</span></h1>
+      <h2>🧭 Your Four Pillars of Destiny</h2>
+      <div class="pillars">
+        <div><strong>Year</strong><br/><span id="pillar-year">--</span></div>
+        <div><strong>Month</strong><br/><span id="pillar-month">--</span></div>
+        <div><strong>Day</strong><br/><span id="pillar-day">--</span></div>
+        <div><strong>Hour</strong><br/><span id="pillar-hour">--</span></div>
+      </div>
+    </section>
+
+    <!-- Page 4: ❤️ Love & Relationship (50句结构) -->
+    <section id="page4">
+      <h2 class="section-header">❤️ Love & Relationship</h2>
+      <div class="summary multi-paragraph" id="love-advice">
+        <div class="advice-block">
+          <h3>🔍 Judgement</h3>
+          <div id="love-judgement"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>💎 Strengths</h3>
+          <div id="love-strengths"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>⚠️ Warnings</h3>
+          <div id="love-warnings"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>🛠 Solutions</h3>
+          <div id="love-solutions"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Page 5: 🏠 Family & Emotional Harmony -->
+    <section id="page5">
+      <h2 class="section-header">🏠 Family & Emotional Harmony</h2>
+      <div class="summary multi-paragraph" id="family-advice">
+        <div class="advice-block">
+          <h3>🔍 Judgement</h3>
+          <div id="family-judgement"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>💎 Strengths</h3>
+          <div id="family-strengths"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>⚠️ Warnings</h3>
+          <div id="family-warnings"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>🛠 Solutions</h3>
+          <div id="family-solutions"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 6: 💼 Career Direction -->
+    <section id="page6">
+      <h2 class="section-header">💼 Career Direction</h2>
+      <div class="summary multi-paragraph" id="career-advice">
+        <div class="advice-block">
+          <h3>🔍 Judgement</h3>
+          <div id="career-judgement"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>💎 Strengths</h3>
+          <div id="career-strengths"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>⚠️ Warnings</h3>
+          <div id="career-warnings"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>🛠 Solutions</h3>
+          <div id="career-solutions"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 7: 💰 Wealth & Financial Insights -->
+    <section id="page7">
+      <h2 class="section-header">💰 Wealth & Financial Insights</h2>
+      <div class="summary multi-paragraph" id="wealth-advice">
+        <div class="advice-block">
+          <h3>🔍 Judgement</h3>
+          <div id="wealth-judgement"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>💎 Strengths</h3>
+          <div id="wealth-strengths"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>⚠️ Warnings</h3>
+          <div id="wealth-warnings"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>🛠 Solutions</h3>
+          <div id="wealth-solutions"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 8: 🧬 Health & Vital Energy -->
+    <section id="page8">
+      <h2 class="section-header">🧬 Health & Vital Energy</h2>
+      <div class="summary multi-paragraph" id="health-advice">
+        <div class="advice-block">
+          <h3>🔍 Judgement</h3>
+          <div id="health-judgement"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>💎 Strengths</h3>
+          <div id="health-strengths"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>⚠️ Warnings</h3>
+          <div id="health-warnings"></div>
+        </div>
+
+        <div class="advice-block">
+          <h3>🛠 Solutions</h3>
+          <div id="health-solutions"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 9: 30-Day Energy Forecast -->
+    <section id="page9">
+      <h2 class="section-header">📈 30-Day Energy Forecast</h2>
+      <canvas id="trendChart"></canvas>
+    </section>
+
+    <!-- Page 10: Lucky Colors for 30 Days -->
+    <section id="page10">
+      <h2 class="section-header">🎨 Your Lucky Colors Calendar</h2>
+      <div class="summary" id="color-calendar">
+        Loading your lucky color calendar...
+      </div>
+    </section>
+
+    <!-- Page 11: Final Wisdom (Philosophical Summary) -->
+    <section id="page11">
+      <h2 class="section-header">🧘 Final Wisdom</h2>
+      <div class="summary" id="philosophy-quote">
+        Reflective thoughts to carry forward...
+      </div>
+    </section>
+
+    <!-- Page 12: Email Submission Reminder -->
+    <section id="page12">
+      <h2 class="section-header">📩 Send This Report to Your Email</h2>
+      <p style="color: #b03020; font-weight: bold;">
+        🔔 Important: If you do not enter your email, you will not be able to view this full report again in the future.
+      </p>
+      <input type="email" id="userEmail" placeholder="Enter your email address">
+      <button onclick="sendReportToEmail()">Send Report to My Email</button>
+      <p id="emailStatus"></p>
+    </section>
+  </div>
+  <script>
+    // Initialize EmailJS
+    emailjs.init("j7OhiNO_Q95f-Ffah");
+
+    // Send report to email
+    function sendReportToEmail() {
+      const email = document.getElementById("userEmail").value.trim();
+      if (!email || !email.includes("@")) {
+        document.getElementById("emailStatus").innerText = "⚠️ Please enter a valid email address.";
+        return;
+      }
+      
+      const templateParams = {
+        user_name: userName,
+        birthdate: birthdate,
+        birthtime: birthtime,
+        birthplace: birthplace,
+        year_pillar: pillars.year,
+        month_pillar: pillars.month,
+        day_pillar: pillars.day,
+        hour_pillar: pillars.hour,
+        dominant_element: dominantElement,
+        love_advice: document.getElementById("love-judgement").innerText + "\n" +
+                     document.getElementById("love-strengths").innerText + "\n" +
+                     document.getElementById("love-warnings").innerText + "\n" +
+                     document.getElementById("love-solutions").innerText,
+        family_advice: document.getElementById("family-judgement").innerText + "\n" +
+                       document.getElementById("family-strengths").innerText + "\n" +
+                       document.getElementById("family-warnings").innerText + "\n" +
+                       document.getElementById("family-solutions").innerText,
+        career_advice: document.getElementById("career-judgement").innerText + "\n" +
+                       document.getElementById("career-strengths").innerText + "\n" +
+                       document.getElementById("career-warnings").innerText + "\n" +
+                       document.getElementById("career-solutions").innerText,
+        wealth_advice: document.getElementById("wealth-judgement").innerText + "\n" +
+                       document.getElementById("wealth-strengths").innerText + "\n" +
+                       document.getElementById("wealth-warnings").innerText + "\n" +
+                       document.getElementById("wealth-solutions").innerText,
+        health_advice: document.getElementById("health-judgement").innerText + "\n" +
+                       document.getElementById("health-strengths").innerText + "\n" +
+                       document.getElementById("health-warnings").innerText + "\n" +
+                       document.getElementById("health-solutions").innerText,
+        lucky_colors: document.getElementById("color-calendar").innerText,
+        philosophy: document.getElementById("philosophy-quote").innerText,
+        user_email: email
+      };
+
+      emailjs.send("service_t6fitnn", "template_2g3xle8", templateParams)
+        .then(() => {
+          document.getElementById("emailStatus").innerText = "✅ Report sent successfully. Please check your inbox.";
+        })
+        .catch(() => {
+          document.getElementById("emailStatus").innerText = "⚠️ Failed to send. Please try again later.";
+        });
+    }
+  </script>
 </body>
 </html>
