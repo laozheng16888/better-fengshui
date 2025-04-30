@@ -101,8 +101,7 @@
 
     function redirectToReport() {
       const params = getParams();
-      const reportURL = `/pages/full-report?name=${encodeURIComponent(params.name)}&birthdate=${encodeURIComponent(params.birthdate)}&birthtime=${encodeURIComponent(params.birthtime)}&birthplace=${encodeURIComponent(params.birthplace)}`;
-      window.location.href = reportURL;
+      const reportURL = `/full-report.html?name=${encodeURIComponent(params.name)}&birthdate=${encodeURIComponent(params.birthdate)}&birthtime=${encodeURIComponent(params.birthtime)}&birthplace=${encodeURIComponent(params.birthplace)}`;
     }
   </script>
 </body>
