@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Full Feng Shui Report</title>
+  <title>Your Full Feng Shui Report</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Segoe UI", "Noto Serif", serif;
       background-color: #f9f5ef;
       color: #333;
       line-height: 1.6;
@@ -44,16 +44,24 @@
       border-radius: 10px;
       box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
     }
-    canvas {
-      max-width: 600px;
-      margin: 30px auto;
-      display: block;
-    }
     .summary {
       padding: 20px;
       background: #fdf8f1;
       border-left: 4px solid #c7a76c;
       border-radius: 8px;
+    }
+    .multi-paragraph {
+      column-count: 1;
+      column-gap: 20px;
+    }
+    .warning-banner {
+      background-color: #fff4e5;
+      border-left: 6px solid #e25822;
+      padding: 15px 20px;
+      margin: 30px 0;
+      font-weight: bold;
+      font-size: 16px;
+      color: #b03020;
     }
     @media (max-width: 600px) {
       .pillars {
@@ -64,6 +72,12 @@
 </head>
 <body>
   <div class="container">
+
+    <!-- Top warning message about email -->
+    <div class="warning-banner">
+      ⚠️ Please make sure to enter your email at the end of this report. We will send a full copy to your inbox. Otherwise, you will not be able to view it again.
+    </div>
+
     <!-- Page 1: Welcome + Four Pillars -->
     <section id="page1">
       <h1>Welcome, <span id="user-name">Friend</span></h1>
@@ -81,219 +95,280 @@
       <canvas id="elementChart"></canvas>
     </section>
 
-    <!-- Page 3: Elemental Summary -->
+    <!-- Page 3: Elemental Overview -->
     <section id="page3">
-      <h2>📜 Elemental Overview</h2>
+      <h2>📜 Elemental Personality Summary</h2>
       <div class="summary" id="element-summary">
-        Loading your elemental interpretation...
+        Loading your elemental traits...
       </div>
     </section>
 
-    <!-- Page 4: Love & Relationship Analysis -->
+    <!-- Page 4: Love & Relationship Advice -->
     <section id="page4">
       <h2>❤️ Love & Relationship</h2>
-      <div class="summary" id="love-advice">
-        Loading love analysis...
+      <div class="summary multi-paragraph" id="love-advice">
+        Loading love-related insights...
       </div>
     </section>
     <!-- Page 5: Family & Emotional Harmony -->
     <section id="page5">
-      <h2>🏠 Family & Inner Circle</h2>
-      <div class="summary" id="family-advice">
+      <h2>🏠 Family & Emotional Harmony</h2>
+      <div class="summary multi-paragraph" id="family-advice">
         Loading family dynamics...
       </div>
     </section>
 
-    <!-- Page 6: Career & Potential -->
+    <!-- Page 6: Career Direction -->
     <section id="page6">
       <h2>💼 Career Direction</h2>
-      <div class="summary" id="career-advice">
+      <div class="summary multi-paragraph" id="career-advice">
         Loading career guidance...
       </div>
     </section>
 
-    <!-- Page 7: Wealth Path & Habits -->
+    <!-- Page 7: Wealth & Money Habits -->
     <section id="page7">
-      <h2>💰 Wealth & Money Habits</h2>
-      <div class="summary" id="wealth-advice">
+      <h2>💰 Wealth & Financial Insights</h2>
+      <div class="summary multi-paragraph" id="wealth-advice">
         Loading wealth insights...
       </div>
     </section>
 
-    <!-- Page 8: Resolution & Healing Guidance -->
+    <!-- Page 8: Healing Guidance & Personal Warnings -->
     <section id="page8">
-      <h2>🔧 Your Personalized Healing Path</h2>
-      <div class="summary" id="warning-advice">
-        Loading recommended adjustments...
+      <h2>🔧 Personal Healing & Adjustments</h2>
+      <div class="summary multi-paragraph" id="warning-advice">
+        Loading healing suggestions...
       </div>
     </section>
-    <!-- Page 9: 30-Day Fortune Trend -->
+    <!-- Page 9: 30-Day Energy Forecast -->
     <section id="page9">
       <h2>📈 30-Day Energy Forecast</h2>
       <canvas id="trendChart"></canvas>
     </section>
 
-    <!-- Page 10: Lucky Colors + Closing Thought -->
+    <!-- Page 10: Lucky Color Calendar -->
     <section id="page10">
-      <h2>🎨 Your Lucky Colors Calendar</h2>
+      <h2>🎨 Lucky Colors for the Next 30 Days</h2>
       <div class="summary" id="color-calendar">
-        Loading monthly palette...
-      </div>
-      <h2>🧘 Final Insight</h2>
-      <div class="summary" id="philosophy-quote">
-        "Balance is not a destination, but a rhythm you return to."
+        Loading your lucky color calendar...
       </div>
     </section>
+
+    <!-- Page 11: Final Philosophical Summary -->
+    <section id="page11">
+      <h2>🧘 Final Wisdom</h2>
+      <div class="summary" id="philosophy-quote">
+        Reflective thoughts to carry forward...
+      </div>
+    </section>
+
+    <!-- Page 12: Email Sending Section -->
+    <section id="page12">
+      <h2>📩 Send This Report to Your Email</h2>
+      <p style="color: #b03020; font-weight: bold;">
+        🔔 Important: If you do not enter your email, you will not be able to view this full report again in the future.
+      </p>
+      <input type="email" id="userEmail" placeholder="Enter your email address" style="padding: 10px; width: 80%; max-width: 400px;">
+      <br>
+      <button onclick="sendReportToEmail()" style="margin-top: 15px; padding: 12px 24px; font-size: 16px; background-color: #7b552c; color: white; border: none; border-radius: 6px; cursor: pointer;">
+        Send Report to My Email
+      </button>
+      <p id="emailStatus" style="margin-top: 10px;"></p>
+    </section>
   </div>
-
   <script>
-    const heavenlyStems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
-    const earthlyBranches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
-    const elementMap = {
-      "甲": "Wood", "乙": "Wood", "丙": "Fire", "丁": "Fire",
-      "戊": "Earth", "己": "Earth", "庚": "Metal", "辛": "Metal",
-      "壬": "Water", "癸": "Water"
-    };
-    const traits = {
-      Wood: {
-        love: "You love through nurturing growth and shared purpose. You are giving and idealistic. Watch for overextending and expectations.",
-        family: "You uplift others and inspire change. You may impose ideals too rigidly. Let harmony allow difference.",
-        career: "Creative, educational, and social-change careers fit you best. Stay rooted while reaching far.",
-        wealth: "Wealth comes through steady building. Avoid burnout from scattered efforts.",
-        warning: "You give too much sometimes. Set boundaries before depletion."
-      },
-      Fire: {
-        love: "You're passionate and vibrant in love. You bring spark and warmth. But emotional flames can scorch if unchecked.",
-        family: "You energize the home but may overreact. Practice patience in emotion.",
-        career: "Leadership, performance, and public-facing roles suit you. Focus your fire into form.",
-        wealth: "You earn fast but spend fast. Structure brings stability.",
-        warning: "Acting before thinking brings regret. Pause often."
-      },
-      Earth: {
-        love: "You love through loyalty and consistency. You are dependable. But express feelings more often.",
-        family: "You're the family's emotional anchor. Don’t bear all alone.",
-        career: "Management, real estate, agriculture suit you. Learn to risk within structure.",
-        wealth: "Wealth builds over time. Don’t resist new strategies.",
-        warning: "Comfort zone isn’t growth. Shake the soil now and then."
-      },
-      Metal: {
-        love: "You love with depth and integrity. But you hide feelings easily. Share more.",
-        family: "Your standards may create distance. Empathy builds bridges.",
-        career: "Law, tech, strategy roles fit. Add flexibility to your rigor.",
-        wealth: "Structured systems build wealth. Control must yield to flow sometimes.",
-        warning: "Perfection isn't love. Vulnerability is."
-      },
-      Water: {
-        love: "You connect deeply and emotionally. You’re intuitive. Guard against over-attachment.",
-        family: "You understand all. But protect your peace.",
-        career: "Writing, travel, healing, diplomacy—water flows where needed.",
-        wealth: "Money flows to you through fluid models. Anchor your plans.",
-        warning: "Drift becomes loss. Stay mindful."
-      }
-    };
+    // Initialize EmailJS
+    emailjs.init("j7OhiNO_Q95f-Ffah");
 
-    function getParams() {
-      const p = new URLSearchParams(window.location.search);
-      return {
-        name: decodeURIComponent(p.get("name") || "Friend"),
-        birthdate: p.get("birthdate") || "",
-        birthtime: p.get("birthtime") || ""
-      };
-    }
+    // Get user input from URL
+    const params = new URLSearchParams(window.location.search);
+    const userName = decodeURIComponent(params.get("name") || "Friend");
+    const birthdate = params.get("birthdate") || "";
+    const birthtime = params.get("birthtime") || "";
+    const birthplace = decodeURIComponent(params.get("birthplace") || "");
+
+    document.getElementById("user-name").innerText = userName;
+
+    // BaZi Core Logic
+    const heavenlyStems = ["Jia", "Yi", "Bing", "Ding", "Wu", "Ji", "Geng", "Xin", "Ren", "Gui"];
+    const earthlyBranches = ["Zi", "Chou", "Yin", "Mao", "Chen", "Si", "Wu", "Wei", "Shen", "You", "Xu", "Hai"];
+    const elementMap = {
+      "Jia": "Wood", "Yi": "Wood",
+      "Bing": "Fire", "Ding": "Fire",
+      "Wu": "Earth", "Ji": "Earth",
+      "Geng": "Metal", "Xin": "Metal",
+      "Ren": "Water", "Gui": "Water"
+    };
 
     function getPillars(birthdate, birthtime) {
-      const d = new Date(`${birthdate}T${birthtime}`);
-      const y = d.getFullYear(), m = d.getMonth() + 1, day = d.getDate(), h = d.getHours();
+      const date = new Date(`${birthdate}T${birthtime}`);
+      const y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate(), h = date.getHours();
       const year = heavenlyStems[(y - 1984) % 10] + earthlyBranches[(y - 1984) % 12];
       const month = heavenlyStems[(m + y) % 10] + earthlyBranches[(m + 1) % 12];
-      const date = heavenlyStems[(day + 2) % 10] + earthlyBranches[(day + 4) % 12];
-      const hour = heavenlyStems[(h + day + 2) % 10] + earthlyBranches[Math.floor((h + 1) / 2) % 12];
-      const stems = [year[0], month[0], date[0], hour[0]];
-      const elements = { Wood:0, Fire:0, Earth:0, Metal:0, Water:0 };
+      const day = heavenlyStems[(d + 2) % 10] + earthlyBranches[(d + 4) % 12];
+      const hour = heavenlyStems[(h + d + 2) % 10] + earthlyBranches[Math.floor((h + 1) / 2) % 12];
+
+      const stems = [year[0], month[0], day[0], hour[0]];
+      const elements = { Wood: 0, Fire: 0, Earth: 0, Metal: 0, Water: 0 };
       stems.forEach(s => { if (elementMap[s]) elements[elementMap[s]]++; });
-      return { year, month, date, hour, elements };
+
+      return { year, month, day, hour, elements, dayStem: day[0] };
     }
 
-    function findDominant(elements) {
-      return Object.entries(elements).reduce((a,b)=>b[1]>a[1]?b:a)[0];
-    }
+    const pillars = getPillars(birthdate, birthtime);
+    document.getElementById("pillar-year").innerText = pillars.year;
+    document.getElementById("pillar-month").innerText = pillars.month;
+    document.getElementById("pillar-day").innerText = pillars.day;
+    document.getElementById("pillar-hour").innerText = pillars.hour;
 
-    function renderRadarChart(elements) {
-      new Chart(document.getElementById("elementChart"), {
-        type: "radar",
-        data: {
-          labels: Object.keys(elements),
-          datasets: [{
-            label: "Five Elements",
-            data: Object.values(elements),
-            backgroundColor: "rgba(199,167,108,0.3)",
-            borderColor: "#c7a76c",
-            pointBackgroundColor: "#c7a76c",
-            borderWidth: 2
-          }]
-        },
-        options: { responsive: true, scales: { r: { min: 0, max: 5 } } }
-      });
-    }
+    const dominantElement = Object.entries(pillars.elements).reduce((a, b) => b[1] > a[1] ? b : a)[0];
+    document.getElementById("element-summary").innerText = `Your dominant element is ${dominantElement}, which shapes your core personality.`;
 
-    function renderTrendChart(dominant) {
-      const base = { Wood:2, Fire:3, Earth:2, Metal:3, Water:2 }[dominant];
-      const values = Array.from({length:30}, (_,i) => Math.max(1, base + Math.sin(i/5)*2));
-      new Chart(document.getElementById("trendChart"), {
-        type: "line",
-        data: {
-          labels: Array.from({length:30}, (_,i)=>`Day ${i+1}`),
-          datasets: [{
-            label: "Energy Index",
-            data: values,
-            borderColor: "#8c6239",
-            backgroundColor: "rgba(140,98,57,0.1)",
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: { responsive: true }
-      });
-    }
-
-    function renderLuckyColors(dominant) {
-      const map = {
-        Wood: "🌿 Green, Sky Blue", Fire: "🔥 Red, Coral",
-        Earth: "🟤 Brown, Beige", Metal: "⚪ White, Silver",
-        Water: "🌊 Black, Navy Blue"
-      };
-      const html = Array.from({length:4}, (_,i) => 
-        `<p><strong>Week ${i+1}:</strong> ${map[dominant]}</p>`
-      ).join("");
-      document.getElementById("color-calendar").innerHTML = html;
-    }
-
-    function fillText(id, text) {
-      document.getElementById(id).innerText = text;
-    }
-
-    const user = getParams();
-    document.getElementById("user-name").innerText = user.name;
-    const pillars = getPillars(user.birthdate, user.birthtime);
-
-    fillText("pillar-year", pillars.year);
-    fillText("pillar-month", pillars.month);
-    fillText("pillar-day", pillars.date);
-    fillText("pillar-hour", pillars.hour);
+    // Entry points for rendering (details will be completed next)
+    function renderRadarChart(elements) {}
+    function renderTrendChart(dominant) {}
+    function renderLuckyColors(dominant) {}
+    function renderAdvice(element, type, containerId) {}
+    function renderPhilosophy() {}
+    function sendReportToEmail() {}
 
     renderRadarChart(pillars.elements);
-    const dominant = findDominant(pillars.elements);
-    const trait = traits[dominant];
+    renderTrendChart(dominantElement);
+    renderLuckyColors(dominantElement);
+    renderPhilosophy();
 
-    fillText("element-summary", `Your dominant element is ${dominant}. ${trait.love}`);
-    fillText("love-advice", trait.love);
-    fillText("family-advice", trait.family);
-    fillText("career-advice", trait.career);
-    fillText("wealth-advice", trait.wealth);
-    fillText("warning-advice", trait.warning);
-
-    renderTrendChart(dominant);
-    renderLuckyColors(dominant);
+    renderAdvice(dominantElement, "love", "love-advice");
+    renderAdvice(dominantElement, "family", "family-advice");
+    renderAdvice(dominantElement, "career", "career-advice");
+    renderAdvice(dominantElement, "wealth", "wealth-advice");
+    renderAdvice(dominantElement, "warning", "warning-advice");
   </script>
 </body>
 </html>
+function renderRadarChart(elements) {
+  new Chart(document.getElementById("elementChart"), {
+    type: "radar",
+    data: {
+      labels: Object.keys(elements),
+      datasets: [{
+        label: "Five Element Balance",
+        data: Object.values(elements),
+        backgroundColor: "rgba(199,167,108,0.2)",
+        borderColor: "#c7a76c",
+        pointBackgroundColor: "#c7a76c",
+        borderWidth: 2
+      }]
+    },
+    options: { responsive: true, scales: { r: { min: 0, max: 4 } } }
+  });
+}
+
+function renderTrendChart(dominant) {
+  const base = { Wood:2, Fire:3, Earth:2, Metal:3, Water:2 }[dominant] || 2;
+  const values = Array.from({length:30}, (_,i) => Math.max(1, base + Math.sin(i/4)*2));
+  new Chart(document.getElementById("trendChart"), {
+    type: "line",
+    data: {
+      labels: Array.from({length:30}, (_,i)=>`Day ${i+1}`),
+      datasets: [{
+        label: "Energy Index",
+        data: values,
+        borderColor: "#7b552c",
+        backgroundColor: "rgba(123,85,44,0.1)",
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: { responsive: true }
+  });
+}
+
+function renderLuckyColors(dominant) {
+  const map = {
+    Wood: "🌿 Green / Sky Blue",
+    Fire: "🔥 Red / Coral",
+    Earth: "🟤 Brown / Beige",
+    Metal: "⚪ White / Silver",
+    Water: "🌊 Black / Navy Blue"
+  };
+  const color = map[dominant] || "🌈 Balanced Colors";
+  let html = "";
+  for (let i = 1; i <= 30; i++) {
+    html += `<p>Day ${i}: ${color}</p>`;
+  }
+  document.getElementById("color-calendar").innerHTML = html;
+}
+
+function renderPhilosophy() {
+  const quotes = [
+    "Balance is not a destination, but a rhythm you return to.",
+    "What you lack teaches you the most.",
+    "Elements flow, just like your journey.",
+    "Destiny is a draft — you hold the pen.",
+    "Five phases, infinite paths.",
+    "When Wood is too strong, the forest burns.",
+    "Even Water needs direction.",
+    "You are not your chart — but you are its voice.",
+    "Harmony is remembering, not controlling.",
+    "Let your nature guide your nurture."
+  ];
+  document.getElementById("philosophy-quote").innerHTML =
+    quotes.map(q => `<p>${q}</p>`).join("");
+}
+
+function renderAdvice(element, type, containerId) {
+  const base = {
+    love: ["You value emotional connection.", "You're devoted in love.", "You build intimacy slowly.", "You can be overly sensitive.", "Fear of rejection may hold you back."],
+    family: ["You care deeply for family.", "You're the emotional anchor.", "You provide stability and warmth.", "You sometimes suppress your needs.", "Boundaries are key."],
+    career: ["You are driven by purpose.", "You bring vision to your work.", "You adapt to challenges.", "You might hesitate to lead.", "You may avoid confrontation."],
+    wealth: ["You respect value over volume.", "You are thoughtful with spending.", "You attract stability.", "You may avoid risk too much.", "Over-saving may limit flow."],
+    warning: ["Balance is your challenge.", "You over-give.", "You hold too much.", "You wait too long.", "You fear change."]
+  };
+  const output = [];
+  for (let i = 0; i < 10; i++) {
+    output.push(`<p>${i+1}. ${base[type][0]}</p>`);
+    output.push(`<p>• ${base[type][1]}</p>`);
+    output.push(`<p>• ${base[type][2]}</p>`);
+    output.push(`<p>• ⚠️ ${base[type][3]}</p>`);
+    output.push(`<p>• ⚠️ ${base[type][4]}</p>`);
+  }
+  document.getElementById(containerId).innerHTML = output.join("");
+}
+
+function sendReportToEmail() {
+  const email = document.getElementById("userEmail").value.trim();
+  if (!email || !email.includes("@")) {
+    document.getElementById("emailStatus").innerText = "⚠️ Please enter a valid email address.";
+    return;
+  }
+
+  const templateParams = {
+    user_name: userName,
+    birthdate: birthdate,
+    birthtime: birthtime,
+    birthplace: birthplace,
+    year_pillar: pillars.year,
+    month_pillar: pillars.month,
+    day_pillar: pillars.day,
+    hour_pillar: pillars.hour,
+    dominant_element: dominantElement,
+    element_summary: document.getElementById("element-summary").innerText,
+    love_advice: document.getElementById("love-advice").innerText,
+    family_advice: document.getElementById("family-advice").innerText,
+    career_advice: document.getElementById("career-advice").innerText,
+    wealth_advice: document.getElementById("wealth-advice").innerText,
+    warning_advice: document.getElementById("warning-advice").innerText,
+    lucky_colors: document.getElementById("color-calendar").innerText,
+    philosophy: document.getElementById("philosophy-quote").innerText,
+    user_email: email
+  };
+
+  emailjs.send("service_t6fitnn", "template_2g3xle8", templateParams)
+    .then(() => {
+      document.getElementById("emailStatus").innerText = "✅ Report sent successfully. Please check your inbox.";
+    })
+    .catch(() => {
+      document.getElementById("emailStatus").innerText = "⚠️ Failed to send. Please try again later.";
+    });
+}
