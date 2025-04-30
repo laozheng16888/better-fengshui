@@ -99,10 +99,11 @@
       };
     }
 
-    function redirectToReport() {
-      const params = getParams();
-      const reportURL = `/full-report.html?name=${encodeURIComponent(params.name)}&birthdate=${encodeURIComponent(params.birthdate)}&birthtime=${encodeURIComponent(params.birthtime)}&birthplace=${encodeURIComponent(params.birthplace)}`;
-    }
+function redirectToReport() {
+  const params = getParams();
+  const reportURL = `/full-report.html?name=${encodeURIComponent(params.name)}&birthdate=${encodeURIComponent(params.birthdate)}&birthtime=${encodeURIComponent(params.birthtime)}&birthplace=${encodeURIComponent(params.birthplace)}`;
+  window.location.href = reportURL;
+}
   </script>
 </body>
 </html>
