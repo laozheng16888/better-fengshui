@@ -341,20 +341,41 @@
   }
 
   function renderLuckyColors(dominant) {
-    const map = {
-      Wood: "🌿 Green / Sky Blue",
-      Fire: "🔥 Red / Coral",
-      Earth: "🟤 Brown / Beige",
-      Metal: "⚪ White / Silver",
-      Water: "🌊 Black / Navy Blue"
-    };
-    const color = map[dominant] || "🌈 Balanced Colors";
-    let html = "";
-    for (let i = 1; i <= 30; i++) {
-      html += `<p>Day ${i}: ${color}</p>`;
-    }
-    document.getElementById("color-calendar").innerHTML = html;
+  const colorMap = {
+    Wood: "🌿 Green / Sky Blue",
+    Fire: "🔥 Red / Coral",
+    Earth: "🟤 Brown / Beige",
+    Metal: "⚪ White / Silver",
+    Water: "🌊 Black / Navy Blue"
+  };
+
+  // 五行循环数组用于轮换颜色
+  const elements = ["Wood", "Fire", "Earth", "Metal", "Water"];
+  const startIndex = elements.indexOf(dominant);
+  const today = new Date();
+
+  let html = "";
+
+  for (let i = 0; i < 30; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    const elementIndex = (startIndex + i) % elements.length;
+    const element = elements[elementIndex];
+    const color = colorMap[element];
+
+    const dayStr = date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      weekday: "short"
+    });
+
+    html += `<p><strong>${dayStr}:</strong> ${color}</p>`;
   }
+
+  document.getElementById("color-calendar").innerHTML = html;
+}
+
 
   function renderPhilosophy() {
     const quotes = [
