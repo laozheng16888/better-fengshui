@@ -1,39 +1,299 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>完整版风水报告</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Full Feng Shui Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f9f5ef;
+      color: #333;
+      line-height: 1.6;
+      padding: 0 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #7b552c;
+    }
+    section {
+      margin: 60px 0;
+    }
+    .pillars {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+      font-size: 18px;
+    }
+    .pillars div {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+      margin: 8px;
+      background-color: #f4ede3;
+      border-radius: 10px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    canvas {
+      max-width: 600px;
+      margin: 30px auto;
+      display: block;
+    }
+    .summary {
+      padding: 20px;
+      background: #fdf8f1;
+      border-left: 4px solid #c7a76c;
+      border-radius: 8px;
+    }
+    @media (max-width: 600px) {
+      .pillars {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>🧧 您的完整版风水命理解读</h2>
+  <div class="container">
+    <!-- Page 1: Welcome + Four Pillars -->
+    <section id="page1">
+      <h1>Welcome, <span id="user-name">Friend</span></h1>
+      <h2>🧭 Your Four Pillars of Destiny</h2>
+      <div class="pillars">
+        <div><strong>Year</strong><br/><span id="pillar-year">--</span></div>
+        <div><strong>Month</strong><br/><span id="pillar-month">--</span></div>
+        <div><strong>Day</strong><br/><span id="pillar-day">--</span></div>
+        <div><strong>Hour</strong><br/><span id="pillar-hour">--</span></div>
+      </div>
+    </section>
+    <!-- Page 2: Five Element Radar Chart -->
+    <section id="page2">
+      <h2>⚖️ Five Element Balance</h2>
+      <canvas id="elementChart"></canvas>
+    </section>
 
-  <div id="user-info"></div>
+    <!-- Page 3: Elemental Summary -->
+    <section id="page3">
+      <h2>📜 Elemental Overview</h2>
+      <div class="summary" id="element-summary">
+        Loading your elemental interpretation...
+      </div>
+    </section>
 
-  <div id="full-report-content">
-    <p>📌 正在为您生成个性化命理内容...</p>
-    <!-- 这里未来会插入复杂报告 -->
+    <!-- Page 4: Love & Relationship Analysis -->
+    <section id="page4">
+      <h2>❤️ Love & Relationship</h2>
+      <div class="summary" id="love-advice">
+        Loading love analysis...
+      </div>
+    </section>
+    <!-- Page 5: Family & Emotional Harmony -->
+    <section id="page5">
+      <h2>🏠 Family & Inner Circle</h2>
+      <div class="summary" id="family-advice">
+        Loading family dynamics...
+      </div>
+    </section>
+
+    <!-- Page 6: Career & Potential -->
+    <section id="page6">
+      <h2>💼 Career Direction</h2>
+      <div class="summary" id="career-advice">
+        Loading career guidance...
+      </div>
+    </section>
+
+    <!-- Page 7: Wealth Path & Habits -->
+    <section id="page7">
+      <h2>💰 Wealth & Money Habits</h2>
+      <div class="summary" id="wealth-advice">
+        Loading wealth insights...
+      </div>
+    </section>
+
+    <!-- Page 8: Resolution & Healing Guidance -->
+    <section id="page8">
+      <h2>🔧 Your Personalized Healing Path</h2>
+      <div class="summary" id="warning-advice">
+        Loading recommended adjustments...
+      </div>
+    </section>
+    <!-- Page 9: 30-Day Fortune Trend -->
+    <section id="page9">
+      <h2>📈 30-Day Energy Forecast</h2>
+      <canvas id="trendChart"></canvas>
+    </section>
+
+    <!-- Page 10: Lucky Colors + Closing Thought -->
+    <section id="page10">
+      <h2>🎨 Your Lucky Colors Calendar</h2>
+      <div class="summary" id="color-calendar">
+        Loading monthly palette...
+      </div>
+      <h2>🧘 Final Insight</h2>
+      <div class="summary" id="philosophy-quote">
+        "Balance is not a destination, but a rhythm you return to."
+      </div>
+    </section>
   </div>
 
   <script>
+    const heavenlyStems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+    const earthlyBranches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+    const elementMap = {
+      "甲": "Wood", "乙": "Wood", "丙": "Fire", "丁": "Fire",
+      "戊": "Earth", "己": "Earth", "庚": "Metal", "辛": "Metal",
+      "壬": "Water", "癸": "Water"
+    };
+    const traits = {
+      Wood: {
+        love: "You love through nurturing growth and shared purpose. You are giving and idealistic. Watch for overextending and expectations.",
+        family: "You uplift others and inspire change. You may impose ideals too rigidly. Let harmony allow difference.",
+        career: "Creative, educational, and social-change careers fit you best. Stay rooted while reaching far.",
+        wealth: "Wealth comes through steady building. Avoid burnout from scattered efforts.",
+        warning: "You give too much sometimes. Set boundaries before depletion."
+      },
+      Fire: {
+        love: "You're passionate and vibrant in love. You bring spark and warmth. But emotional flames can scorch if unchecked.",
+        family: "You energize the home but may overreact. Practice patience in emotion.",
+        career: "Leadership, performance, and public-facing roles suit you. Focus your fire into form.",
+        wealth: "You earn fast but spend fast. Structure brings stability.",
+        warning: "Acting before thinking brings regret. Pause often."
+      },
+      Earth: {
+        love: "You love through loyalty and consistency. You are dependable. But express feelings more often.",
+        family: "You're the family's emotional anchor. Don’t bear all alone.",
+        career: "Management, real estate, agriculture suit you. Learn to risk within structure.",
+        wealth: "Wealth builds over time. Don’t resist new strategies.",
+        warning: "Comfort zone isn’t growth. Shake the soil now and then."
+      },
+      Metal: {
+        love: "You love with depth and integrity. But you hide feelings easily. Share more.",
+        family: "Your standards may create distance. Empathy builds bridges.",
+        career: "Law, tech, strategy roles fit. Add flexibility to your rigor.",
+        wealth: "Structured systems build wealth. Control must yield to flow sometimes.",
+        warning: "Perfection isn't love. Vulnerability is."
+      },
+      Water: {
+        love: "You connect deeply and emotionally. You’re intuitive. Guard against over-attachment.",
+        family: "You understand all. But protect your peace.",
+        career: "Writing, travel, healing, diplomacy—water flows where needed.",
+        wealth: "Money flows to you through fluid models. Anchor your plans.",
+        warning: "Drift becomes loss. Stay mindful."
+      }
+    };
+
     function getParams() {
-      const params = new URLSearchParams(window.location.search);
+      const p = new URLSearchParams(window.location.search);
       return {
-        name: params.get("name") || "未知姓名",
-        birthdate: params.get("birthdate") || "未填写",
-        birthtime: params.get("birthtime") || "未填写",
-        birthplace: params.get("birthplace") || "未填写"
+        name: decodeURIComponent(p.get("name") || "Friend"),
+        birthdate: p.get("birthdate") || "",
+        birthtime: p.get("birthtime") || ""
       };
     }
 
-    const user = getParams();
-    document.getElementById("user-info").innerHTML = `
-      <p><strong>姓名：</strong> ${user.name}</p>
-      <p><strong>出生日期：</strong> ${user.birthdate}</p>
-      <p><strong>出生时间：</strong> ${user.birthtime}</p>
-      <p><strong>出生地点：</strong> ${user.birthplace}</p>
-    `;
+    function getPillars(birthdate, birthtime) {
+      const d = new Date(`${birthdate}T${birthtime}`);
+      const y = d.getFullYear(), m = d.getMonth() + 1, day = d.getDate(), h = d.getHours();
+      const year = heavenlyStems[(y - 1984) % 10] + earthlyBranches[(y - 1984) % 12];
+      const month = heavenlyStems[(m + y) % 10] + earthlyBranches[(m + 1) % 12];
+      const date = heavenlyStems[(day + 2) % 10] + earthlyBranches[(day + 4) % 12];
+      const hour = heavenlyStems[(h + day + 2) % 10] + earthlyBranches[Math.floor((h + 1) / 2) % 12];
+      const stems = [year[0], month[0], date[0], hour[0]];
+      const elements = { Wood:0, Fire:0, Earth:0, Metal:0, Water:0 };
+      stems.forEach(s => { if (elementMap[s]) elements[elementMap[s]]++; });
+      return { year, month, date, hour, elements };
+    }
 
-    // TODO：后续你可调用 JS 计算八字并生成完整内容
+    function findDominant(elements) {
+      return Object.entries(elements).reduce((a,b)=>b[1]>a[1]?b:a)[0];
+    }
+
+    function renderRadarChart(elements) {
+      new Chart(document.getElementById("elementChart"), {
+        type: "radar",
+        data: {
+          labels: Object.keys(elements),
+          datasets: [{
+            label: "Five Elements",
+            data: Object.values(elements),
+            backgroundColor: "rgba(199,167,108,0.3)",
+            borderColor: "#c7a76c",
+            pointBackgroundColor: "#c7a76c",
+            borderWidth: 2
+          }]
+        },
+        options: { responsive: true, scales: { r: { min: 0, max: 5 } } }
+      });
+    }
+
+    function renderTrendChart(dominant) {
+      const base = { Wood:2, Fire:3, Earth:2, Metal:3, Water:2 }[dominant];
+      const values = Array.from({length:30}, (_,i) => Math.max(1, base + Math.sin(i/5)*2));
+      new Chart(document.getElementById("trendChart"), {
+        type: "line",
+        data: {
+          labels: Array.from({length:30}, (_,i)=>`Day ${i+1}`),
+          datasets: [{
+            label: "Energy Index",
+            data: values,
+            borderColor: "#8c6239",
+            backgroundColor: "rgba(140,98,57,0.1)",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { responsive: true }
+      });
+    }
+
+    function renderLuckyColors(dominant) {
+      const map = {
+        Wood: "🌿 Green, Sky Blue", Fire: "🔥 Red, Coral",
+        Earth: "🟤 Brown, Beige", Metal: "⚪ White, Silver",
+        Water: "🌊 Black, Navy Blue"
+      };
+      const html = Array.from({length:4}, (_,i) => 
+        `<p><strong>Week ${i+1}:</strong> ${map[dominant]}</p>`
+      ).join("");
+      document.getElementById("color-calendar").innerHTML = html;
+    }
+
+    function fillText(id, text) {
+      document.getElementById(id).innerText = text;
+    }
+
+    const user = getParams();
+    document.getElementById("user-name").innerText = user.name;
+    const pillars = getPillars(user.birthdate, user.birthtime);
+
+    fillText("pillar-year", pillars.year);
+    fillText("pillar-month", pillars.month);
+    fillText("pillar-day", pillars.date);
+    fillText("pillar-hour", pillars.hour);
+
+    renderRadarChart(pillars.elements);
+    const dominant = findDominant(pillars.elements);
+    const trait = traits[dominant];
+
+    fillText("element-summary", `Your dominant element is ${dominant}. ${trait.love}`);
+    fillText("love-advice", trait.love);
+    fillText("family-advice", trait.family);
+    fillText("career-advice", trait.career);
+    fillText("wealth-advice", trait.wealth);
+    fillText("warning-advice", trait.warning);
+
+    renderTrendChart(dominant);
+    renderLuckyColors(dominant);
   </script>
 </body>
 </html>
