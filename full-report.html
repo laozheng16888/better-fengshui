@@ -233,6 +233,8 @@
     // Initialize EmailJS
     emailjs.init("j7OhiNO_Q95f-Ffah");
 
+    let radarChartInstance = null;
+
     // Read user input from URL
     const params = new URLSearchParams(window.location.search);
     const userName = decodeURIComponent(params.get("name") || "Friend");
