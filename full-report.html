@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Full Feng Shui Report</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -103,42 +104,92 @@
       </div>
     </section>
 
-    <!-- Page 4: Love & Relationship Advice -->
+    <!-- Page 4: ❤️ Love & Relationship (50句结构) -->
     <section id="page4">
       <h2>❤️ Love & Relationship</h2>
       <div class="summary multi-paragraph" id="love-advice">
-        Loading love-related insights...
+        <h3>🔍 Judgement</h3>
+        <div id="love-judgement"></div>
+
+        <h3>💎 Strengths</h3>
+        <div id="love-strengths"></div>
+
+        <h3>⚠️ Warnings</h3>
+        <div id="love-warnings"></div>
+
+        <h3>🛠 Solutions</h3>
+        <div id="love-solutions"></div>
       </div>
     </section>
-    <!-- Page 5: Family & Emotional Harmony -->
+    <!-- Page 5: 🏠 Family & Emotional Harmony -->
     <section id="page5">
       <h2>🏠 Family & Emotional Harmony</h2>
       <div class="summary multi-paragraph" id="family-advice">
-        Loading family dynamics...
+        <h3>🔍 Judgement</h3>
+        <div id="family-judgement"></div>
+
+        <h3>💎 Strengths</h3>
+        <div id="family-strengths"></div>
+
+        <h3>⚠️ Warnings</h3>
+        <div id="family-warnings"></div>
+
+        <h3>🛠 Solutions</h3>
+        <div id="family-solutions"></div>
       </div>
     </section>
 
-    <!-- Page 6: Career Direction -->
+    <!-- Page 6: 💼 Career Direction -->
     <section id="page6">
       <h2>💼 Career Direction</h2>
       <div class="summary multi-paragraph" id="career-advice">
-        Loading career guidance...
+        <h3>🔍 Judgement</h3>
+        <div id="career-judgement"></div>
+
+        <h3>💎 Strengths</h3>
+        <div id="career-strengths"></div>
+
+        <h3>⚠️ Warnings</h3>
+        <div id="career-warnings"></div>
+
+        <h3>🛠 Solutions</h3>
+        <div id="career-solutions"></div>
       </div>
     </section>
 
-    <!-- Page 7: Wealth & Money Habits -->
+    <!-- Page 7: 💰 Wealth & Money Habits -->
     <section id="page7">
       <h2>💰 Wealth & Financial Insights</h2>
       <div class="summary multi-paragraph" id="wealth-advice">
-        Loading wealth insights...
+        <h3>🔍 Judgement</h3>
+        <div id="wealth-judgement"></div>
+
+        <h3>💎 Strengths</h3>
+        <div id="wealth-strengths"></div>
+
+        <h3>⚠️ Warnings</h3>
+        <div id="wealth-warnings"></div>
+
+        <h3>🛠 Solutions</h3>
+        <div id="wealth-solutions"></div>
       </div>
     </section>
 
-    <!-- Page 8: Healing Guidance & Personal Warnings -->
+    <!-- Page 8: 🧬 Health & Vital Energy -->
     <section id="page8">
-      <h2>🔧 Personal Healing & Adjustments</h2>
-      <div class="summary multi-paragraph" id="warning-advice">
-        Loading healing suggestions...
+      <h2>🧬 Health & Vital Energy</h2>
+      <div class="summary multi-paragraph" id="health-advice">
+        <h3>🔍 Judgement</h3>
+        <div id="health-judgement"></div>
+
+        <h3>💎 Strengths</h3>
+        <div id="health-strengths"></div>
+
+        <h3>⚠️ Warnings</h3>
+        <div id="health-warnings"></div>
+
+        <h3>🛠 Solutions</h3>
+        <div id="health-solutions"></div>
       </div>
     </section>
     <!-- Page 9: 30-Day Energy Forecast -->
@@ -147,15 +198,15 @@
       <canvas id="trendChart"></canvas>
     </section>
 
-    <!-- Page 10: Lucky Color Calendar -->
+    <!-- Page 10: Lucky Colors for 30 Days -->
     <section id="page10">
-      <h2>🎨 Lucky Colors for the Next 30 Days</h2>
+      <h2>🎨 Your Lucky Colors Calendar</h2>
       <div class="summary" id="color-calendar">
         Loading your lucky color calendar...
       </div>
     </section>
 
-    <!-- Page 11: Final Philosophical Summary -->
+    <!-- Page 11: Final Wisdom (Philosophical Summary) -->
     <section id="page11">
       <h2>🧘 Final Wisdom</h2>
       <div class="summary" id="philosophy-quote">
@@ -163,13 +214,14 @@
       </div>
     </section>
 
-    <!-- Page 12: Email Sending Section -->
+    <!-- Page 12: Email Submission Reminder -->
     <section id="page12">
       <h2>📩 Send This Report to Your Email</h2>
       <p style="color: #b03020; font-weight: bold;">
         🔔 Important: If you do not enter your email, you will not be able to view this full report again in the future.
       </p>
-      <input type="email" id="userEmail" placeholder="Enter your email address" style="padding: 10px; width: 80%; max-width: 400px;">
+      <input type="email" id="userEmail" placeholder="Enter your email address"
+        style="padding: 10px; width: 80%; max-width: 400px;">
       <br>
       <button onclick="sendReportToEmail()" style="margin-top: 15px; padding: 12px 24px; font-size: 16px; background-color: #7b552c; color: white; border: none; border-radius: 6px; cursor: pointer;">
         Send Report to My Email
@@ -181,7 +233,7 @@
     // Initialize EmailJS
     emailjs.init("j7OhiNO_Q95f-Ffah");
 
-    // Get user input from URL
+    // Read user input from URL
     const params = new URLSearchParams(window.location.search);
     const userName = decodeURIComponent(params.get("name") || "Friend");
     const birthdate = params.get("birthdate") || "";
@@ -190,7 +242,7 @@
 
     document.getElementById("user-name").innerText = userName;
 
-    // BaZi Core Logic
+    // Heavenly stems and earthly branches
     const heavenlyStems = ["Jia", "Yi", "Bing", "Ding", "Wu", "Ji", "Geng", "Xin", "Ren", "Gui"];
     const earthlyBranches = ["Zi", "Chou", "Yin", "Mao", "Chen", "Si", "Wu", "Wei", "Shen", "You", "Xu", "Hai"];
     const elementMap = {
@@ -204,6 +256,7 @@
     function getPillars(birthdate, birthtime) {
       const date = new Date(`${birthdate}T${birthtime}`);
       const y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate(), h = date.getHours();
+
       const year = heavenlyStems[(y - 1984) % 10] + earthlyBranches[(y - 1984) % 12];
       const month = heavenlyStems[(m + y) % 10] + earthlyBranches[(m + 1) % 12];
       const day = heavenlyStems[(d + 2) % 10] + earthlyBranches[(d + 4) % 12];
@@ -223,152 +276,1406 @@
     document.getElementById("pillar-hour").innerText = pillars.hour;
 
     const dominantElement = Object.entries(pillars.elements).reduce((a, b) => b[1] > a[1] ? b : a)[0];
-    document.getElementById("element-summary").innerText = `Your dominant element is ${dominantElement}, which shapes your core personality.`;
 
-    // Entry points for rendering (details will be completed next)
+    // Entry points – real rendering logic will be added next
     function renderRadarChart(elements) {}
     function renderTrendChart(dominant) {}
     function renderLuckyColors(dominant) {}
-    function renderAdvice(element, type, containerId) {}
     function renderPhilosophy() {}
     function sendReportToEmail() {}
 
+    function renderAdvice(element, type) {
+      // Full logic will follow...
+    }
+
+    // Call all rendering modules
     renderRadarChart(pillars.elements);
     renderTrendChart(dominantElement);
     renderLuckyColors(dominantElement);
     renderPhilosophy();
 
-    renderAdvice(dominantElement, "love", "love-advice");
-    renderAdvice(dominantElement, "family", "family-advice");
-    renderAdvice(dominantElement, "career", "career-advice");
-    renderAdvice(dominantElement, "wealth", "wealth-advice");
-    renderAdvice(dominantElement, "warning", "warning-advice");
+    // Advice blocks
+    renderAdvice(dominantElement, "love");
+    renderAdvice(dominantElement, "family");
+    renderAdvice(dominantElement, "career");
+    renderAdvice(dominantElement, "wealth");
+    renderAdvice(dominantElement, "health");
   </script>
+<script>
+  function renderRadarChart(elements) {
+    new Chart(document.getElementById("elementChart"), {
+      type: "radar",
+      data: {
+        labels: Object.keys(elements),
+        datasets: [{
+          label: "Five Element Balance",
+          data: Object.values(elements),
+          backgroundColor: "rgba(199,167,108,0.2)",
+          borderColor: "#c7a76c",
+          pointBackgroundColor: "#c7a76c",
+          borderWidth: 2
+        }]
+      },
+      options: { responsive: true, scales: { r: { min: 0, max: 4 } } }
+    });
+  }
+
+  function renderTrendChart(dominant) {
+    const base = { Wood: 2, Fire: 3, Earth: 2, Metal: 3, Water: 2 }[dominant] || 2;
+    const values = Array.from({ length: 30 }, (_, i) => Math.max(1, base + Math.sin(i / 4) * 2));
+    new Chart(document.getElementById("trendChart"), {
+      type: "line",
+      data: {
+        labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+        datasets: [{
+          label: "Energy Index",
+          data: values,
+          borderColor: "#7b552c",
+          backgroundColor: "rgba(123,85,44,0.1)",
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: { responsive: true }
+    });
+  }
+
+  function renderLuckyColors(dominant) {
+    const map = {
+      Wood: "🌿 Green / Sky Blue",
+      Fire: "🔥 Red / Coral",
+      Earth: "🟤 Brown / Beige",
+      Metal: "⚪ White / Silver",
+      Water: "🌊 Black / Navy Blue"
+    };
+    const color = map[dominant] || "🌈 Balanced Colors";
+    let html = "";
+    for (let i = 1; i <= 30; i++) {
+      html += `<p>Day ${i}: ${color}</p>`;
+    }
+    document.getElementById("color-calendar").innerHTML = html;
+  }
+
+  function renderPhilosophy() {
+    const quotes = [
+      "Balance is not a destination, but a rhythm you return to.",
+      "What you lack teaches you the most.",
+      "Elements flow, just like your journey.",
+      "Destiny is a draft — you hold the pen.",
+      "Five phases, infinite paths.",
+      "When Wood is too strong, the forest burns.",
+      "Even Water needs direction.",
+      "You are not your chart — but you are its voice.",
+      "Harmony is remembering, not controlling.",
+      "Let your nature guide your nurture."
+    ];
+    document.getElementById("philosophy-quote").innerHTML =
+      quotes.map(q => `<p>${q}</p>`).join("");
+  }
+</script>
+<script>
+function renderAdvice(element, type) {
+  const adviceLib = {
+    love: {
+      Wood: {
+        judgement: [
+          "You seek love with idealism rooted in growth.",
+          "Romantic commitment comes after emotional cultivation.",
+          "Your love style blends loyalty and curiosity.",
+          "You value shared direction in partnerships.",
+          "Your emotions sprout from deep emotional soil."
+        ],
+        strengths: [
+          "You nurture your partner’s dreams.", "You are emotionally generous.",
+          "You build stable love foundations.", "You express care through action.",
+          "You're attentive to your partner's moods.", "You respect space in love.",
+          "You tend to long-lasting commitment.", "You adapt with your partner’s pace.",
+          "You support growth together.", "You are emotionally patient.",
+          "You’re not afraid to be vulnerable.", "You’re consistent and thoughtful.",
+          "You believe in evolving love.", "You are good at conflict resolution.",
+          "You use past pain to shape tenderness.", "You bring romance through rituals.",
+          "You express love through support.", "You’re sensitive to emotional shifts.",
+          "You forgive with authenticity.", "You balance freedom and intimacy."
+        ],
+        warnings: [
+          "You may over-idealize your partner.", "Over-giving can lead to burnout.",
+          "You might suppress your needs to avoid conflict.", "Fear of rejection may lead to withdrawal.",
+          "You may delay leaving unhealthy dynamics.", "You sometimes seek validation externally.",
+          "Romantic consistency may mask stagnation.", "You expect others to match your emotional depth.",
+          "You avoid necessary confrontations.", "You confuse nurturing with fixing.",
+          "You fear disappointing your partner.", "You’re hesitant to ask for space.",
+          "You sacrifice authenticity for harmony.", "You resist abrupt emotional changes.",
+          "You feel overly responsible for emotional outcomes."
+        ],
+        solutions: [
+          "Communicate your needs early and clearly.", "Establish emotional boundaries.",
+          "Practice regular self-care in love.", "Express vulnerability with courage.",
+          "Balance idealism with realism.", "Create space for your own growth.",
+          "Let go of rescuing dynamics.", "Cultivate trust in uncertainty.",
+          "Reflect before reacting emotionally.", "Value self-nourishment alongside giving."
+        ]
+      },
+      Fire: {
+        judgement: [
+          "You love passionately and intensely.", "Attraction ignites quickly for you.",
+          "You crave expressive, visible connection.", "Your love burns bright but must be managed.",
+          "You are drawn to bold gestures in romance."
+        ],
+        strengths: [
+          "You radiate charisma in love.", "You express your affection vividly.",
+          "You bring energy to relationships.", "You inspire passion in your partner.",
+          "You defend your loved ones fiercely.", "You initiate with confidence.",
+          "You're honest with emotions.", "You light up the lives of others.",
+          "You’re courageous in love.", "You create memorable romantic experiences.",
+          "You celebrate love publicly.", "You pursue connection fearlessly.",
+          "You're emotionally transparent.", "You protect those you love.",
+          "You amplify shared joy.", "You transform desire into devotion.",
+          "You bounce back from heartbreak boldly.", "You act decisively in matters of the heart.",
+          "You lead with your heart.", "You bring emotional warmth and spark."
+        ],
+        warnings: [
+          "You may rush into intimacy.", "You might burn out quickly.",
+          "Impulsiveness can cause emotional instability.", "You may struggle with emotional control.",
+          "You sometimes mistake excitement for compatibility.", "Your passion may overpower your partner.",
+          "You can become possessive when insecure.", "You resist slowing down emotionally.",
+          "You may dramatize conflicts.", "You find it hard to sit with emotional discomfort.",
+          "You might fear boredom in stable love.", "You may dominate emotional space.",
+          "You react before processing.", "You confuse intensity with depth.",
+          "You may fear being emotionally ordinary."
+        ],
+        solutions: [
+          "Pause before pursuing attraction.", "Let your heart catch up with your impulse.",
+          "Listen deeply before acting.", "Channel intensity into consistency.",
+          "Balance excitement with stability.", "Practice emotional pacing.",
+          "Let love mature before defining it.", "Invite grounded intimacy.",
+          "Reframe silence as connection too.", "Give yourself time to feel fully."
+        ]
+      },
+      Earth: {
+        judgement: [
+          "You approach love with loyalty and care.", "Security matters deeply in relationships.",
+          "You express love through service and presence.", "You value emotional dependability.",
+          "You seek peace over drama in intimacy."
+        ],
+        strengths: [
+          "You’re reliable in love.", "You prioritize emotional safety.",
+          "You make people feel secure.", "You express love through practical action.",
+          "You’re patient in building intimacy.", "You are emotionally grounded.",
+          "You show up consistently.", "You commit to lasting bonds.",
+          "You listen with sincerity.", "You bring calm in emotional storms.",
+          "You forgive with dignity.", "You support without expecting applause.",
+          "You express devotion with grace.", "You embody stable love.",
+          "You endure emotional seasons.", "You hold space without judgment.",
+          "You comfort through steadiness.", "You offer quiet protection.",
+          "You value shared roots.", "You build trust brick by brick."
+        ],
+        warnings: [
+          "You may suppress your own emotional needs.", "You avoid conflict to keep peace.",
+          "You may become emotionally rigid.", "You resist necessary emotional change.",
+          "You struggle with letting go of relationships.", "You may become passive-aggressive.",
+          "You fear uncertainty in love.", "You may tolerate unhealthy dynamics too long.",
+          "You over-sacrifice for harmony.", "You equate familiarity with love.",
+          "You may feel stuck emotionally.", "You confuse stability with stagnation.",
+          "You expect predictability in emotions.", "You find it hard to express intense feelings.",
+          "You may under-communicate in conflict."
+        ],
+        solutions: [
+          "Name your needs openly.", "Practice emotional flexibility.",
+          "Trust the process of change.", "Embrace discomfort for growth.",
+          "Reframe conflict as connection.", "Set limits on overgiving.",
+          "Let go of past patterns gently.", "Balance comfort with honesty.",
+          "Create safe spaces for emotional risk.", "Learn to release emotional control."
+        ]
+      },
+      Metal: {
+        judgement: [
+          "You love with depth but reserve.", "You protect your emotions carefully.",
+          "You seek integrity in intimacy.", "You value clarity in affection.",
+          "You commit when deeply convinced."
+        ],
+        strengths: [
+          "You are loyal to the core.", "You value emotional truth.",
+          "You commit with full heart.", "You bring strong boundaries.",
+          "You offer intellectual intimacy.", "You create emotional stability.",
+          "You express love with precision.", "You stay even in storms.",
+          "You support silently but powerfully.", "You hold honor in commitment.",
+          "You show trust through structure.", "You protect your loved one’s reputation.",
+          "You guide with clear ethics.", "You challenge dishonesty.",
+          "You are emotionally reliable.", "You think long-term.",
+          "You protect your heart with wisdom.", "You avoid drama.",
+          "You value emotional responsibility.", "You respect time in connection."
+        ],
+        warnings: [
+          "You may struggle to express affection.", "You fear vulnerability.",
+          "You hesitate to open emotionally.", "You can appear distant in love.",
+          "You may avoid emotional messiness.", "You hold onto past hurts tightly.",
+          "You expect perfection in partners.", "You resist emotional spontaneity.",
+          "You prioritize reason over feeling.", "You fear losing control emotionally.",
+          "You bottle up passion.", "You delay processing heartbreak.",
+          "You may judge emotions as weakness.", "You struggle with emotional ambiguity.",
+          "You may withdraw under pressure."
+        ],
+        solutions: [
+          "Allow imperfection in love.", "Share feelings without judgment.",
+          "Practice emotional presence.", "Let love be messy at times.",
+          "Soften high expectations.", "Speak your needs aloud.",
+          "Explore playfulness in connection.", "Balance logic with feeling.",
+          "Embrace emotional nuance.", "Trust safe emotional risk."
+        ]
+      },
+      Water: {
+        judgement: [
+          "You love intuitively and deeply.", "You crave emotional resonance.",
+          "You are drawn to soul connection.", "You seek understanding more than attention.",
+          "You bond through shared meaning."
+        ],
+        strengths: [
+          "You offer deep listening.", "You connect beneath words.",
+          "You hold space for emotion.", "You reflect empathy clearly.",
+          "You flow with your partner’s emotional rhythm.", "You sense what others need.",
+          "You nurture emotional complexity.", "You validate feelings naturally.",
+          "You’re soulful in expression.", "You anticipate emotional shifts.",
+          "You accept emotional paradox.", "You express love poetically.",
+          "You commit through connection.", "You guide through compassion.",
+          "You are emotionally inclusive.", "You witness your partner’s inner world.",
+          "You create safe emotional depth.", "You honor silence in love.",
+          "You comfort without fixing.", "You dissolve emotional walls."
+        ],
+        warnings: [
+          "You may absorb others' emotions excessively.", "You risk emotional enmeshment.",
+          "You avoid emotional confrontation.", "You can retreat when overwhelmed.",
+          "You struggle with boundaries.", "You may hide in fantasy.",
+          "You delay commitment for safety.", "You fear rejection deeply.",
+          "You hesitate to clarify emotions.", "You internalize partner’s distress.",
+          "You may resist structured intimacy.", "You become overly introspective.",
+          "You doubt your emotional worth.", "You escape into solitude.", "You may attract emotionally unavailable partners."
+        ],
+        solutions: [
+          "Ground your emotional experiences.", "Set clear emotional limits.",
+          "Speak your truth kindly.", "Balance giving and receiving.",
+          "Anchor in shared reality.", "Practice clarity in affection.",
+          "Name your fears aloud.", "Create emotional routines.",
+          "Let others support you too.", "Turn inward without isolation."
+        ]
+      }
+    }, // end of love
+    family: {
+      Wood: {
+        judgement: [
+          "You see family as a garden that requires care and growth.",
+          "You thrive when your family is evolving together.",
+          "You want emotional movement in family, not stagnation.",
+          "You lead by helping others grow.",
+          "You connect through shared improvement."
+        ],
+        strengths: [
+          "You inspire your family with vision.", "You encourage each member’s uniqueness.",
+          "You act as the family motivator.", "You are supportive in difficult times.",
+          "You foster personal development.", "You nurture emotional curiosity.",
+          "You lead family healing.", "You adapt to family changes.",
+          "You believe in second chances.", "You bring hope to tough dynamics.",
+          "You cultivate emotional openness.", "You break generational patterns.",
+          "You normalize vulnerability.", "You mentor younger members.",
+          "You build long-term legacy.", "You are emotionally generous.",
+          "You guide without forcing.", "You reframe family conflict as growth.",
+          "You express love through consistency.", "You speak up for fairness."
+        ],
+        warnings: [
+          "You may overinvest in fixing others.", "You feel responsible for everyone’s emotions.",
+          "You avoid setting boundaries.", "You grow impatient with slow changers.",
+          "You push too hard for transformation.", "You lose yourself in helping roles.",
+          "You over-function in crisis.", "You suppress personal needs.",
+          "You expect emotional evolution prematurely.", "You struggle with passivity in others.",
+          "You judge stagnation harshly.", "You may bypass practical issues.",
+          "You may attract needy family members.", "You avoid accepting what won’t change.",
+          "You feel guilt when detaching."
+        ],
+        solutions: [
+          "Allow family members to change at their own pace.",
+          "Balance involvement with detachment.",
+          "Release control over outcomes.",
+          "Honor generational differences.",
+          "Prioritize your personal boundaries.",
+          "Express needs without guilt.",
+          "Shift from fixing to witnessing.",
+          "Redirect energy toward your own growth.",
+          "Celebrate small family wins.",
+          "Learn when to say enough."
+        ]
+      },
+      Fire: {
+        judgement: [
+          "You bring high emotion and intensity to family life.",
+          "You care deeply and express feelings boldly.",
+          "Your presence is strongly felt by family.",
+          "You spark joy and also stir conflict.",
+          "You love loudly but may need space."
+        ],
+        strengths: [
+          "You are emotionally expressive.", "You uplift family moods.",
+          "You lead with your heart.", "You protect your loved ones fiercely.",
+          "You take initiative in resolving problems.", "You energize family celebrations.",
+          "You validate emotions clearly.", "You break silence with honesty.",
+          "You defend family values.", "You ignite hope in challenges.",
+          "You bring passion to family purpose.", "You forgive quickly.",
+          "You love unconditionally.", "You act boldly for loved ones.",
+          "You are emotionally transparent.", "You create family rituals.",
+          "You celebrate identity.", "You create memories often.",
+          "You diffuse boredom with energy.", "You revive stagnant dynamics."
+        ],
+        warnings: [
+          "You may react before listening.", "You over-identify with roles.",
+          "You struggle with calm presence.", "You dominate family conversation.",
+          "You avoid slowing down emotionally.", "You resist others’ boundaries.",
+          "You can be emotionally overwhelming.", "You expect immediate harmony.",
+          "You stir drama unconsciously.", "You feel unappreciated easily.",
+          "You rush into problem-solving.", "You push others toward action too fast.",
+          "You exhaust yourself leading emotionally.", "You may expect family to reflect you.",
+          "You resist letting go of control."
+        ],
+        solutions: [
+          "Pause before emotional reaction.",
+          "Practice reflective listening.",
+          "Let others lead too.",
+          "Channel fire into creative action.",
+          "Honor emotional stillness.",
+          "Set emotional pacing with others.",
+          "Give space for quiet love.",
+          "Balance passion with patience.",
+          "Let your family teach you restraint.",
+          "Trust love without volume."
+        ]
+      },
+      Earth: {
+        judgement: [
+          "You are the stabilizer of your family.",
+          "You seek peace over conflict at home.",
+          "You provide emotional grounding.",
+          "You protect tradition and lineage.",
+          "You bring structure and reliability."
+        ],
+        strengths: [
+          "You offer emotional safety.", "You are always available.",
+          "You carry family burdens quietly.", "You honor loyalty.",
+          "You forgive repeatedly.", "You manage crises practically.",
+          "You create stability for others.", "You help people feel seen.",
+          "You hold family secrets respectfully.", "You pass on traditions.",
+          "You stay calm in chaos.", "You provide long-term thinking.",
+          "You model endurance.", "You are emotionally predictable.",
+          "You value simplicity in connection.", "You honor ancestors and future.",
+          "You believe in roots and belonging.", "You avoid unnecessary judgment.",
+          "You show up even when tired.", "You are emotionally mature."
+        ],
+        warnings: [
+          "You may become emotionally stagnant.", "You avoid necessary confrontations.",
+          "You suppress your own needs.", "You carry unspoken resentments.",
+          "You hold grudges internally.", "You struggle with emotional change.",
+          "You enable dysfunction to keep peace.", "You put duty over joy.",
+          "You avoid vulnerability.", "You fear loss of control.",
+          "You deny emotional urgency.", "You feel responsible for everyone.",
+          "You resist help.", "You expect others to be like you.",
+          "You equate conflict with failure."
+        ],
+        solutions: [
+          "Speak your feelings openly.",
+          "Redefine family as evolving.",
+          "Create space for your own growth.",
+          "Let others support you too.",
+          "Acknowledge what no longer works.",
+          "Update family traditions.",
+          "Say no with compassion.",
+          "Welcome emotional surprise.",
+          "Value authenticity over calm.",
+          "Choose joy as much as duty."
+        ]
+      },
+      Metal: {
+        judgement: [
+          "You bring high standards into family roles.",
+          "You seek clarity in family dynamics.",
+          "You respect emotional order.",
+          "You guide with calm authority.",
+          "You teach by example more than emotion."
+        ],
+        strengths: [
+          "You bring structure to chaos.", "You speak with fairness.",
+          "You teach emotional discipline.", "You model integrity.",
+          "You provide emotional clarity.", "You handle disputes with logic.",
+          "You honor family rules.", "You value accountability.",
+          "You maintain emotional boundaries.", "You keep emotions from spiraling.",
+          "You protect privacy.", "You focus on collective well-being.",
+          "You challenge dishonesty.", "You set firm limits.",
+          "You serve without noise.", "You are emotionally reserved but consistent.",
+          "You show trust by responsibility.", "You preserve dignity in conflict.",
+          "You act out of principle.", "You sustain ethical loyalty."
+        ],
+        warnings: [
+          "You may seem emotionally distant.", "You suppress feelings for the greater good.",
+          "You avoid family vulnerability.", "You expect high control.",
+          "You struggle with forgiveness.", "You judge emotions as weakness.",
+          "You avoid ambiguous dynamics.", "You resist fluidity.",
+          "You may isolate emotionally.", "You dislike emotional outbursts.",
+          "You fear disorder.", "You prefer correction over comfort.",
+          "You detach too early.", "You avoid emotional expression.",
+          "You suppress grief."
+        ],
+        solutions: [
+          "Allow emotional expression without judgment.",
+          "Listen beyond facts.",
+          "Invite softness into feedback.",
+          "Value emotional nuance.",
+          "Explore vulnerability as courage.",
+          "Balance principle with presence.",
+          "Let go of perfect roles.",
+          "Practice emotional repair.",
+          "Trust uncertainty in family.",
+          "Honor connection over control."
+        ]
+      },
+      Water: {
+        judgement: [
+          "You are emotionally intuitive in family life.",
+          "You sense others’ needs before they speak.",
+          "You hold space for emotion.",
+          "You mediate through feeling, not force.",
+          "You crave emotional depth at home."
+        ],
+        strengths: [
+          "You nurture family emotions gently.", "You are deeply loyal.",
+          "You accept emotional complexity.", "You build soulful family bonds.",
+          "You listen with compassion.", "You flow around tension calmly.",
+          "You speak with emotional insight.", "You validate even subtle pain.",
+          "You allow sadness to be felt.", "You offer emotional sanctuary.",
+          "You read between the lines.", "You sense family needs ahead of time.",
+          "You respect emotional pace.", "You honor ancestral emotions.",
+          "You support in silence.", "You repair wounds with care.",
+          "You trust emotional process.", "You understand even difficult emotions.",
+          "You absorb emotion without panic."
+        ],
+        warnings: [
+          "You may take on too much emotional burden.", "You avoid confrontation to stay peaceful.",
+          "You dissolve into others’ feelings.", "You retreat when overwhelmed.",
+          "You sacrifice self-clarity.", "You neglect personal boundaries.",
+          "You delay necessary truths.", "You process emotions privately.",
+          "You feel guilt when detaching.", "You romanticize dysfunction.",
+          "You absorb generational trauma.", "You lose yourself in family identity.",
+          "You suppress anger.", "You may become emotionally passive.",
+          "You fear being misunderstood."
+        ],
+        solutions: [
+          "Define emotional limits.",
+          "Voice your needs honestly.",
+          "Release emotions that aren’t yours.",
+          "Balance empathy with autonomy.",
+          "Clarify your inner boundaries.",
+          "Speak truth with softness.",
+          "Center yourself in family storms.",
+          "Practice emotional embodiment.",
+          "Reclaim joy from obligation.",
+          "Honor your emotional rhythm."
+        ]
+      }
+    }, // end of family
+    career: {
+      Wood: {
+        judgement: [
+          "You thrive in careers that involve growth and vision.",
+          "You prefer roles where you can lead, inspire, or build.",
+          "You flourish when your work has long-term meaning.",
+          "You resist stagnation and routine in your profession.",
+          "You grow through challenge and creative direction."
+        ],
+        strengths: [
+          "You are visionary and future-oriented.",
+          "You initiate new projects fearlessly.",
+          "You motivate teams through optimism.",
+          "You turn abstract ideas into plans.",
+          "You persist through obstacles.",
+          "You value personal development at work.",
+          "You learn quickly and adapt well.",
+          "You care about ethical growth.",
+          "You handle responsibility with foresight.",
+          "You aim to leave legacy in your field.",
+          "You inspire with your ambition.",
+          "You mentor others authentically.",
+          "You handle leadership transitions gracefully.",
+          "You express ideals with clarity.",
+          "You break limits without breaking structure.",
+          "You bring fresh energy to stale systems.",
+          "You build bridges between ideas and execution.",
+          "You prioritize long-term over short-term wins.",
+          "You expand potential in others.",
+          "You root your work in purpose."
+        ],
+        warnings: [
+          "You may resist structure or authority.",
+          "You tire easily in repetitive roles.",
+          "You lose focus without novelty.",
+          "You overextend in too many directions.",
+          "You undervalue necessary stability.",
+          "You may reject slow growth.",
+          "You push forward before alignment is ready.",
+          "You struggle with micro-management.",
+          "You idealize team harmony unrealistically.",
+          "You lack patience with delay.",
+          "You may neglect systems in favor of ideas.",
+          "You hesitate with grounded planning.",
+          "You burnout chasing rapid progress.",
+          "You may abandon things mid-build.",
+          "You dislike rigid deadlines."
+        ],
+        solutions: [
+          "Build flexible structure around vision.",
+          "Embrace cycles of pause and growth.",
+          "Prioritize completion over expansion.",
+          "Develop patience in execution.",
+          "Ground ideas before launch.",
+          "Align with steady collaborators.",
+          "Commit to focused goals.",
+          "Accept limits as creative boundaries.",
+          "Train yourself in systems thinking.",
+          "Stay rooted while reaching forward."
+        ]
+      },
+      Fire: {
+        judgement: [
+          "You shine in roles that require visibility and inspiration.",
+          "You express leadership through charisma and energy.",
+          "You are suited for bold, expressive, high-impact careers.",
+          "You thrive in dynamic, fast-paced environments.",
+          "You bring heat and heart to your work."
+        ],
+        strengths: [
+          "You light up the room in presentations.",
+          "You communicate passionately.",
+          "You influence with confidence.",
+          "You energize team dynamics.",
+          "You lead by example.",
+          "You adapt to pressure.",
+          "You embody motivation.",
+          "You perform under spotlight.",
+          "You attract attention naturally.",
+          "You inspire risk-taking.",
+          "You celebrate team wins loudly.",
+          "You create momentum from nothing.",
+          "You turn crisis into action.",
+          "You act decisively under stress.",
+          "You express clear direction.",
+          "You bring emotional intelligence to the table.",
+          "You champion causes you believe in.",
+          "You bounce back from setbacks swiftly.",
+          "You drive urgency with style.",
+          "You spark innovation through instinct."
+        ],
+        warnings: [
+          "You may burn out from overexertion.",
+          "You struggle with follow-through.",
+          "You act without full planning.",
+          "You avoid quiet roles.",
+          "You crave approval at times.",
+          "You resist hierarchy.",
+          "You clash with slower colleagues.",
+          "You overpromise when excited.",
+          "You expect constant results.",
+          "You dramatize small conflicts.",
+          "You dislike routine.",
+          "You resist feedback emotionally.",
+          "You fear fading relevance.",
+          "You prioritize intensity over stability.",
+          "You avoid delegation."
+        ],
+        solutions: [
+          "Balance passion with preparation.",
+          "Pace your energy output.",
+          "Follow up with grounded tasks.",
+          "Honor the value of silence.",
+          "Welcome mentorship in humility.",
+          "Define long-term strategy.",
+          "Protect your energy reserves.",
+          "Choose projects that align with purpose.",
+          "Celebrate small, slow wins.",
+          "Accept background work as vital."
+        ]
+      },
+      Earth: {
+        judgement: [
+          "You are suited for stable, supportive roles with clear structure.",
+          "You value consistency and long-term contribution.",
+          "You thrive where reliability and loyalty matter.",
+          "You resist chaotic or disorganized environments.",
+          "You seek careers with ethical and practical value."
+        ],
+        strengths: [
+          "You are dependable and trusted.",
+          "You show up consistently.",
+          "You support others calmly.",
+          "You bring realism to strategy.",
+          "You ground vision with logic.",
+          "You manage long-term projects well.",
+          "You maintain integrity under pressure.",
+          "You protect team morale.",
+          "You think of others’ needs.",
+          "You organize tasks methodically.",
+          "You hold steady during change.",
+          "You master your tools thoroughly.",
+          "You preserve institutional knowledge.",
+          "You prevent crises through planning.",
+          "You bring emotional maturity.",
+          "You sustain team culture.",
+          "You resist unethical shortcuts.",
+          "You serve with humility.",
+          "You remember what matters.",
+          "You create infrastructure others rely on."
+        ],
+        warnings: [
+          "You may resist necessary change.",
+          "You over-commit out of duty.",
+          "You avoid taking bold risks.",
+          "You cling to outdated systems.",
+          "You delay letting go of roles.",
+          "You equate longevity with loyalty.",
+          "You underestimate your potential.",
+          "You over-function in support roles.",
+          "You fear leaving your comfort zone.",
+          "You avoid visibility.",
+          "You sacrifice ambition for peace.",
+          "You settle for less than you deserve.",
+          "You struggle with disruption.",
+          "You avoid emotional expression at work.",
+          "You resist working under rapid pressure."
+        ],
+        solutions: [
+          "Redefine loyalty as evolving.",
+          "Trust yourself in new terrain.",
+          "Stretch your growth edge weekly.",
+          "Speak up for your value.",
+          "Embrace discomfort as data.",
+          "Let go of outdated attachments.",
+          "Say yes to leadership with support.",
+          "Seek innovative allies.",
+          "Accept support in return.",
+          "Update your definition of stability."
+        ]
+      },
+      Metal: {
+        judgement: [
+          "You excel in structured, principled, and analytical careers.",
+          "You value precision, efficiency, and systems.",
+          "You thrive where rules and standards apply.",
+          "You are drawn to law, technology, design, or philosophy.",
+          "You express brilliance in quiet excellence."
+        ],
+        strengths: [
+          "You analyze with clarity.",
+          "You edit and refine precisely.",
+          "You uphold high standards.",
+          "You structure chaos into clarity.",
+          "You design elegant systems.",
+          "You solve problems rationally.",
+          "You cut distractions quickly.",
+          "You focus intensely.",
+          "You separate emotion from decision.",
+          "You speak with integrity.",
+          "You hold others accountable.",
+          "You improve continuously.",
+          "You innovate logically.",
+          "You commit to mastery.",
+          "You hold firm ethics.",
+          "You communicate efficiently.",
+          "You finish what you start.",
+          "You think independently.",
+          "You defend truth strongly.",
+          "You lead through structure."
+        ],
+        warnings: [
+          "You may resist ambiguity.",
+          "You fear failure in expression.",
+          "You judge imperfection harshly.",
+          "You overwork in pursuit of mastery.",
+          "You resist feedback emotionally.",
+          "You avoid messy collaboration.",
+          "You delay sharing your vision.",
+          "You isolate in solo work.",
+          "You fear change disrupting control.",
+          "You detach from people issues.",
+          "You suppress emotional cues.",
+          "You can appear cold.",
+          "You hesitate under uncertainty.",
+          "You over-plan and under-execute.",
+          "You dislike subjective decisions."
+        ],
+        solutions: [
+          "Balance logic with human insight.",
+          "Honor creative imperfection.",
+          "Allow unfinished drafts to breathe.",
+          "Seek feedback from emotional peers.",
+          "Trust intuition as data.",
+          "Practice vulnerability in leadership.",
+          "Join emotionally driven teams.",
+          "Schedule rest as rigor.",
+          "Value presence over perfection.",
+          "Let your wisdom serve empathy."
+        ]
+      },
+      Water: {
+        judgement: [
+          "You flow well in flexible, intuitive, and communication-based careers.",
+          "You thrive in emotional intelligence and insight roles.",
+          "You express yourself through writing, teaching, healing, or art.",
+          "You resist rigid environments with strict hierarchy.",
+          "You bring creativity and compassion to your field."
+        ],
+        strengths: [
+          "You work intuitively with people.",
+          "You adapt to dynamic challenges.",
+          "You sense undercurrents in organizations.",
+          "You speak with insight.",
+          "You read between lines in strategy.",
+          "You reflect and revise wisely.",
+          "You comfort others through change.",
+          "You mentor with care.",
+          "You approach problems holistically.",
+          "You combine empathy with planning.",
+          "You work best with trust-based freedom.",
+          "You simplify complex dynamics.",
+          "You inspire with subtle charisma.",
+          "You embrace lifelong learning.",
+          "You anticipate future shifts.",
+          "You harmonize team conflicts.",
+          "You value emotional diversity.",
+          "You balance flow and form.",
+          "You build invisible influence.",
+          "You guide gently but effectively."
+        ],
+        warnings: [
+          "You may avoid structure excessively.",
+          "You delay execution while reflecting.",
+          "You struggle to assert ideas.",
+          "You absorb workplace stress.",
+          "You hesitate to ask for credit.",
+          "You fear aggressive environments.",
+          "You avoid necessary confrontation.",
+          "You internalize pressure silently.",
+          "You need flexible boundaries.",
+          "You under-sell your value.",
+          "You withdraw during chaos.",
+          "You dislike deadlines.",
+          "You feel drained by toxic dynamics.",
+          "You avoid fast decision cycles.",
+          "You lose focus under pressure."
+        ],
+        solutions: [
+          "Create flexible frameworks.",
+          "Ask for clarity on expectations.",
+          "Value your intuition as contribution.",
+          "Name your work with confidence.",
+          "Protect your energy strategically.",
+          "Partner with structured teammates.",
+          "Track decisions with kindness.",
+          "Define progress on your own terms.",
+          "Establish grounding rituals.",
+          "Turn inward reflection into outward voice."
+        ]
+      }
+    }, // end of career
+    wealth: {
+      Wood: {
+        judgement: [
+          "You grow wealth like a forest—organically and over time.",
+          "You see money as a tool for purpose, not just security.",
+          "You earn best through growth-oriented and creative pursuits.",
+          "You need alignment between values and income sources.",
+          "Your wealth journey reflects your vision and expansion."
+        ],
+        strengths: [
+          "You create income through innovation.", "You invest in ideas with potential.",
+          "You attract abundance through generosity.", "You build slow but sustainable gains.",
+          "You diversify your income streams.", "You bring ethics into finance.",
+          "You teach others to grow wealth.", "You are good at monetizing hobbies.",
+          "You take financial leaps when inspired.", "You share money knowledge easily.",
+          "You seek opportunities beyond the obvious.", "You attract collaborators who align.",
+          "You value long-term investments.", "You turn setbacks into breakthroughs.",
+          "You have wealth-building discipline.", "You see money as a means of impact.",
+          "You expand your income through community.", "You reinvent your financial identity often.",
+          "You use failure as financial feedback.", "You align money with life mission."
+        ],
+        warnings: [
+          "You may take on too many projects at once.", "You invest before proper research.",
+          "You avoid stable routines that build wealth.", "You chase novelty over consistency.",
+          "You struggle to finish what you start.", "You lose money through scattered focus.",
+          "You underprice your work.", "You let ethics override personal gain completely.",
+          "You feel guilty about charging fairly.", "You resist financial systems.",
+          "You ignore spreadsheets and budgeting.", "You avoid asking for more.",
+          "You get bored with slow financial growth.", "You distrust material success.",
+          "You prioritize meaning over survival at times."
+        ],
+        solutions: [
+          "Build financial structure for your ideas.",
+          "Track your earnings consistently.",
+          "Balance purpose with pragmatism.",
+          "Accept payment as affirmation.",
+          "Learn financial literacy.",
+          "Create a focus funnel.",
+          "Price your gifts fairly.",
+          "Delegate or automate routines.",
+          "Celebrate small money wins.",
+          "Let wealth reflect growth, not just giving."
+        ]
+      },
+      Fire: {
+        judgement: [
+          "You earn wealth through visibility, expression, and courage.",
+          "You are financially magnetic when passionate.",
+          "You associate money with excitement and movement.",
+          "You burn fast and must manage financial fuel.",
+          "Your wealth reflects your energy cycles."
+        ],
+        strengths: [
+          "You earn fast through charisma.", "You manifest money through bold action.",
+          "You pitch with confidence.", "You promote yourself without shame.",
+          "You find shortcuts to success.", "You create money momentum quickly.",
+          "You influence purchasing behavior.", "You inspire investment through passion.",
+          "You thrive in competitive markets.", "You close deals intuitively.",
+          "You rebound quickly from financial mistakes.", "You spot trends ahead of others.",
+          "You magnetize clients through energy.", "You create urgency in launches.",
+          "You are great at sales and storytelling.", "You bring fun to financial topics.",
+          "You stimulate economic flow.", "You are decisive in pricing.",
+          "You turn attention into income.", "You use enthusiasm as capital."
+        ],
+        warnings: [
+          "You overspend on impulse.", "You avoid financial discipline.",
+          "You chase trends without analysis.", "You burn out chasing income highs.",
+          "You fear saving slows momentum.", "You attach self-worth to earnings.",
+          "You under-plan for dry spells.", "You equate spending with self-love.",
+          "You gamble under pressure.", "You ignore long-term security.",
+          "You lose interest in consistent strategy.", "You chase fast success over sustainable income.",
+          "You confuse abundance with extravagance.", "You burn bridges with financial impatience.",
+          "You hide from financial data."
+        ],
+        solutions: [
+          "Automate your savings.", "Use structure to sustain flow.",
+          "Set spending thresholds with joy.", "Create excitement in budgeting.",
+          "Balance fire with financial breathwork.", "Develop financial rituals.",
+          "Honor rest as investment.", "Use excitement to fuel consistency.",
+          "Consult a financial partner.", "Save like you sell: confidently."
+        ]
+      },
+      Earth: {
+        judgement: [
+          "You build wealth slowly, steadily, and securely.",
+          "You seek financial stability above all else.",
+          "You are dependable with resources.",
+          "You prefer tangible assets and reliable systems.",
+          "Your wealth is rooted in effort and preservation."
+        ],
+        strengths: [
+          "You save consistently.", "You budget responsibly.",
+          "You plan years in advance.", "You honor financial commitments.",
+          "You manage risks cautiously.", "You prioritize essential needs.",
+          "You avoid unnecessary spending.", "You help others manage money.",
+          "You accumulate assets carefully.", "You value property and land.",
+          "You build wealth through work ethic.", "You are dependable in group finances.",
+          "You track expenses closely.", "You ensure long-term sustainability.",
+          "You seek fairness in transactions.", "You stay calm in market downturns.",
+          "You invest in what's proven.", "You trust compound growth.",
+          "You build financial foundations.", "You uphold tradition in wealth."
+        ],
+        warnings: [
+          "You may hoard instead of invest.", "You resist financial risk too much.",
+          "You undervalue joy in spending.", "You delay necessary upgrades.",
+          "You judge others’ financial styles.", "You cling to outdated money models.",
+          "You avoid discussions about wealth.", "You fear loss excessively.",
+          "You limit potential by over-saving.", "You resist financial innovation.",
+          "You ignore intuitive opportunities.", "You may undercharge for stability.",
+          "You overwork for minimal gain.", "You equate money with safety too rigidly.",
+          "You spend out of guilt or duty."
+        ],
+        solutions: [
+          "Create fun in finance.", "Invest in learning, not just saving.",
+          "Open to low-risk experimentation.", "Price your skills with confidence.",
+          "Set emotional goals alongside money goals.", "Welcome updated money models.",
+          "Balance effort with ease.", "Redefine wealth to include time and joy.",
+          "Upgrade your money story.", "Let money reflect trust, not just fear."
+        ]
+      },
+      Metal: {
+        judgement: [
+          "You approach money with precision, structure, and strategy.",
+          "You are drawn to clean systems and long-term wealth models.",
+          "You prioritize order and ethical earning.",
+          "You flourish in roles involving finance, law, or analysis.",
+          "Your wealth is tied to discipline and clarity."
+        ],
+        strengths: [
+          "You budget meticulously.", "You manage taxes and contracts well.",
+          "You forecast with accuracy.", "You keep clear financial records.",
+          "You use logic to avoid mistakes.", "You hold high financial standards.",
+          "You research before spending.", "You calculate value precisely.",
+          "You minimize waste.", "You separate emotion from decisions.",
+          "You hold firm to pricing.", "You negotiate thoughtfully.",
+          "You protect assets intelligently.", "You build predictable income streams.",
+          "You create order in chaos.", "You teach others financial literacy.",
+          "You act with financial ethics.", "You refine your wealth strategies.",
+          "You update financial plans regularly.", "You set rules and stick to them."
+        ],
+        warnings: [
+          "You fear unpredictable markets.", "You over-control money flow.",
+          "You judge others' spending styles.", "You procrastinate spending.",
+          "You suppress financial spontaneity.", "You avoid asking for financial help.",
+          "You resist new technologies.", "You fear delegation.",
+          "You over-optimize and under-relax.", "You struggle with donation or generosity.",
+          "You equate net worth with self-worth.", "You avoid emotional motivations.",
+          "You delay until conditions are perfect.", "You are too rigid with budgets.",
+          "You ignore creative money sources."
+        ],
+        solutions: [
+          "Welcome flexibility in systems.", "Trust intuition with numbers.",
+          "Spend with intention, not just restraint.", "Relax financial perfectionism.",
+          "Balance math with meaning.", "Integrate emotional value.",
+          "Learn from less structured mentors.", "Practice financial forgiveness.",
+          "Celebrate progress over precision.", "Treat money as evolving, not fixed."
+        ]
+      },
+      Water: {
+        judgement: [
+          "You flow with income more than chase it.",
+          "You earn best in emotionally or intuitively aligned work.",
+          "You relate money to meaning and depth.",
+          "You often attract unexpected financial blessings.",
+          "Your wealth reflects emotional tides."
+        ],
+        strengths: [
+          "You adapt your financial identity often.", "You trust flow in income.",
+          "You connect money with purpose.", "You attract financial synchronicities.",
+          "You channel emotions into earnings.", "You intuit trends before others.",
+          "You monetize storytelling or empathy.", "You earn through relationships.",
+          "You value freedom over status.", "You negotiate with nuance.",
+          "You balance giving and receiving.", "You hold money lightly but wisely.",
+          "You thrive in supportive collaborations.", "You teach others emotional value of money.",
+          "You use imagination for wealth creation.", "You embrace non-linear wealth.",
+          "You rebuild easily after setbacks.", "You evolve financial definitions often.",
+          "You embrace mystery in finance.", "You invest in emotional fulfillment."
+        ],
+        warnings: [
+          "You avoid structure or planning.", "You forget where money goes.",
+          "You let emotions drive spending.", "You fear accountability.",
+          "You give without return.", "You trust without verification.",
+          "You resist pricing your value.", "You escape financial pressure.",
+          "You romanticize scarcity.", "You fear being seen as greedy.",
+          "You withdraw from money conversations.", "You feel guilt earning more.",
+          "You undercharge to stay liked.", "You struggle with deadlines.",
+          "You lose direction in abundance."
+        ],
+        solutions: [
+          "Create emotional-friendly finance routines.",
+          "Set clear financial intentions.",
+          "Use flow tracking tools.",
+          "Price with compassion and strength.",
+          "Anchor goals in internal worth.",
+          "Combine freedom with discipline.",
+          "Welcome structure as empowerment.",
+          "Accept wealth as spiritual alignment.",
+          "Practice mindful giving.",
+          "Let income reflect emotional integrity."
+        ]
+      }
+    }, // end of wealth
+    health: {
+      Wood: {
+        judgement: [
+          "Your health thrives with movement and flexibility.",
+          "Stagnation affects your physical and emotional well-being.",
+          "Your energy is linked to growth and creative flow.",
+          "Tension often builds in your muscles and liver region.",
+          "You are prone to stress when progress feels blocked."
+        ],
+        strengths: [
+          "You recover quickly from setbacks.",
+          "You benefit from nature and outdoors.",
+          "You respond well to body-mind approaches.",
+          "You are attuned to early warning signs.",
+          "You take action on health concerns.",
+          "You are motivated to improve fitness.",
+          "You have strong regenerative energy.",
+          "You seek holistic healing.",
+          "You support others in wellness.",
+          "You commit to long-term improvement.",
+          "You embrace dietary flexibility.",
+          "You respond well to detox practices.",
+          "You move with intention.",
+          "You track your physical patterns.",
+          "You understand stress signals.",
+          "You align physical and emotional health.",
+          "You invest in your body’s growth.",
+          "You stay active in transitions.",
+          "You adapt exercise to emotional needs.",
+          "You use rest as growth, not escape."
+        ],
+        warnings: [
+          "You may overextend your body.",
+          "You resist rest out of guilt.",
+          "You internalize frustration physically.",
+          "You are prone to tension headaches.",
+          "You may neglect emotional hygiene.",
+          "You rush healing processes.",
+          "You push past signals to stop.",
+          "You overidentify with improvement.",
+          "You suppress anger in the body.",
+          "You experience digestive tension.",
+          "You grow irritable under limits.",
+          "You may develop muscle rigidity.",
+          "You resist physical stillness.",
+          "You confuse burnout with progress.",
+          "You avoid preventative care."
+        ],
+        solutions: [
+          "Incorporate daily stretching and movement.",
+          "Prioritize active relaxation.",
+          "Use breath to release internal tension.",
+          "Allow emotions to move freely.",
+          "Balance drive with grounding rituals.",
+          "Schedule wellness breaks intentionally.",
+          "Explore liver-supportive foods.",
+          "Embrace non-linear healing paths.",
+          "Learn emotional expression physically.",
+          "Let flexibility define your vitality."
+        ]
+      },
+      Fire: {
+        judgement: [
+          "Your vitality is linked to your emotional excitement.",
+          "You glow when you feel inspired and socially alive.",
+          "Stress and overactivity can lead to burnout.",
+          "Your heart and circulatory system are energetic centers.",
+          "You thrive with expressive movement and creative health."
+        ],
+        strengths: [
+          "You energize others with your health goals.",
+          "You bounce back quickly after illness.",
+          "You respond well to cardio and heat-building movement.",
+          "You bring joy into physical routines.",
+          "You are attuned to emotional signals in the body.",
+          "You infuse vitality into health rituals.",
+          "You are responsive to sound therapy or rhythmic healing.",
+          "You benefit from group exercise or dance.",
+          "You burn calories through enthusiasm.",
+          "You are emotionally motivated to improve.",
+          "You use health to express self-worth.",
+          "You visualize recovery well.",
+          "You embody optimism physically.",
+          "You rest actively with intention.",
+          "You attract good health with charisma.",
+          "You metabolize emotional release quickly.",
+          "You elevate others’ wellness around you.",
+          "You glow when your heart feels open.",
+          "You associate health with joy.",
+          "You bring playfulness to healing."
+        ],
+        warnings: [
+          "You may overtrain in bursts.",
+          "You suppress emotional crashes.",
+          "You avoid rest until breakdown.",
+          "You attach identity to energy levels.",
+          "You mask fatigue with stimulation.",
+          "You overconsume heating foods or stimulants.",
+          "You fluctuate between extremes of energy.",
+          "You push through symptoms.",
+          "You fear losing momentum.",
+          "You resist stillness in routines.",
+          "You rely too much on outward validation.",
+          "You over-celebrate quick recovery.",
+          "You avoid check-ups fearing bad news.",
+          "You neglect grounding rituals.",
+          "You may burn out silently."
+        ],
+        solutions: [
+          "Create rhythm in exercise and sleep.",
+          "Balance movement with breathwork.",
+          "Track emotional triggers of physical shifts.",
+          "Honor downtime without guilt.",
+          "Let excitement be balanced by nourishment.",
+          "Ground fire with hydration and cooling foods.",
+          "Schedule joyful rest like activity.",
+          "Set emotional health goals too.",
+          "Check-in daily without judgment.",
+          "Protect passion by respecting limits."
+        ]
+      },
+      Earth: {
+        judgement: [
+          "Your health reflects your emotional and physical consistency.",
+          "You are deeply attuned to your digestion and stability.",
+          "You thrive with routine and regular rhythms.",
+          "Nurturing others can impact your own body.",
+          "You store emotions physically in your stomach and joints."
+        ],
+        strengths: [
+          "You sustain health habits over time.",
+          "You prioritize nourishment and safety.",
+          "You are grounded in your physical awareness.",
+          "You benefit from warm and simple meals.",
+          "You recover well with routine care.",
+          "You listen to your body’s needs.",
+          "You seek comfort without escapism.",
+          "You trust in slow healing processes.",
+          "You maintain balance through discipline.",
+          "You stabilize others through calm presence.",
+          "You protect your immune system naturally.",
+          "You bring gentleness to your healing path.",
+          "You respect your body’s timing.",
+          "You enjoy calming environments.",
+          "You align seasons with lifestyle shifts.",
+          "You value home-cooked nutrition.",
+          "You offer care through presence.",
+          "You handle pain with dignity.",
+          "You are consistent with checkups.",
+          "You understand the long view of wellness."
+        ],
+        warnings: [
+          "You may become emotionally sedentary.",
+          "You avoid addressing minor health changes.",
+          "You comfort eat during stress.",
+          "You suppress feelings through food.",
+          "You resist trying new modalities.",
+          "You tolerate tension quietly.",
+          "You hold weight emotionally.",
+          "You delay asking for help.",
+          "You neglect hydration under pressure.",
+          "You cling to outdated routines.",
+          "You avoid cardio-based movement.",
+          "You struggle to release tension stored in body.",
+          "You downplay aches and fatigue.",
+          "You internalize others’ pain physically.",
+          "You delay doctor visits for practicality."
+        ],
+        solutions: [
+          "Schedule regular body movement.",
+          "Invite new practices into old routines.",
+          "Seek body-based emotional expression.",
+          "Balance nurture with action.",
+          "Explore digestive health support.",
+          "Build wellness into your calendar.",
+          "Try lightness alongside consistency.",
+          "Treat your body like a sacred home.",
+          "Address small issues early.",
+          "Let flexibility ground your stability."
+        ]
+      },
+      Metal: {
+        judgement: [
+          "Your health is linked to breath, skin, and clarity.",
+          "You are sensitive to pollution and inner toxins alike.",
+          "You require clean routines and structured care.",
+          "You may suppress grief physically.",
+          "You heal best with disciplined reflection."
+        ],
+        strengths: [
+          "You manage symptoms with precision.",
+          "You are proactive in screenings.",
+          "You thrive on clean air and environments.",
+          "You detox naturally through routine.",
+          "You observe health changes carefully.",
+          "You honor daily hygiene and purity.",
+          "You respond well to structured fitness.",
+          "You track body changes analytically.",
+          "You follow up on diagnoses consistently.",
+          "You create order in health chaos.",
+          "You follow health plans reliably.",
+          "You filter emotional noise from physical truth.",
+          "You seek excellence in body performance.",
+          "You handle chronic issues methodically.",
+          "You heal silently but effectively.",
+          "You respect boundaries in healing.",
+          "You connect discipline to longevity.",
+          "You practice self-containment in illness.",
+          "You don’t ignore warning signs.",
+          "You hold high standards in health."
+        ],
+        warnings: [
+          "You may hold tension in your lungs or chest.",
+          "You avoid messy healing processes.",
+          "You judge your body’s imperfections.",
+          "You expect rigid discipline at all times.",
+          "You suppress tears or sadness.",
+          "You neglect rest in pursuit of productivity.",
+          "You isolate when unwell.",
+          "You fear showing vulnerability through illness.",
+          "You struggle with loss or decay.",
+          "You over-rely on medical authority.",
+          "You hide symptoms to avoid being seen as weak.",
+          "You internalize unresolved grief.",
+          "You fear holistic healing practices.",
+          "You resist softening the body.",
+          "You under-express physical pain."
+        ],
+        solutions: [
+          "Embrace emotional expression physically.",
+          "Allow imperfections in your body.",
+          "Honor softness in routines.",
+          "Use breathwork for tension release.",
+          "Let nature clean your nervous system.",
+          "Connect grief with renewal.",
+          "Speak your needs aloud.",
+          "Reframe rest as discipline.",
+          "Use flexibility in structured care.",
+          "Let health reflect both form and flow."
+        ]
+      },
+      Water: {
+        judgement: [
+          "Your health reflects your emotional tides and inner flow.",
+          "You are deeply sensitive to energetic and environmental shifts.",
+          "You store fear and fatigue in your lower body and kidneys.",
+          "You heal best in calm, nurturing spaces.",
+          "You are prone to energy depletion when boundaries dissolve."
+        ],
+        strengths: [
+          "You respond well to restorative therapies.",
+          "You connect dreams and symptoms intuitively.",
+          "You sleep deeply when aligned.",
+          "You use solitude as medicine.",
+          "You tune into subtleties of discomfort.",
+          "You meditate for clarity.",
+          "You allow deep healing to occur.",
+          "You are fluid in recovery.",
+          "You are empathetic to others’ pain.",
+          "You know when to withdraw to replenish.",
+          "You support others energetically.",
+          "You explore healing through storytelling or journaling.",
+          "You navigate subtle energetic shifts.",
+          "You regenerate through quiet.",
+          "You are aware of somatic emotion.",
+          "You seek wisdom in your illness.",
+          "You respect your intuition.",
+          "You align seasons with health flow.",
+          "You are adaptable during illness.",
+          "You carry deep wellness wisdom."
+        ],
+        warnings: [
+          "You may ignore physical symptoms until severe.",
+          "You drift into avoidance.",
+          "You blur emotional and physical signals.",
+          "You take on others’ illness energetically.",
+          "You struggle with consistent habits.",
+          "You fear the visibility of health challenges.",
+          "You lose motivation in long-term recovery.",
+          "You use food or silence to escape.",
+          "You become overly sedentary.",
+          "You distrust structured health plans.",
+          "You withhold concerns from doctors.",
+          "You over-isolate during fatigue.",
+          "You drown in emotional overwhelm.",
+          "You reject bright environments.",
+          "You defer to others about your body."
+        ],
+        solutions: [
+          "Create a health rhythm that matches your inner tides.",
+          "Ground your emotions through movement.",
+          "Use water-based therapies to flow physically.",
+          "Schedule stillness alongside accountability.",
+          "Practice energy protection rituals.",
+          "Speak your needs even in fear.",
+          "Rebuild stamina with gentleness.",
+          "Track patterns to gain clarity.",
+          "Blend intuition with information.",
+          "Let your body be a spiritual teacher."
+        ]
+      }
+    }, // end of health
+    }; // end of adviceLib
+
+    // 显示建议内容（自动渲染至页面各区域）
+    const sectionIds = {
+      love: ["love-judgement", "love-strengths", "love-warnings", "love-solutions"],
+      family: ["family-judgement", "family-strengths", "family-warnings", "family-solutions"],
+      career: ["career-judgement", "career-strengths", "career-warnings", "career-solutions"],
+      wealth: ["wealth-judgement", "wealth-strengths", "wealth-warnings", "wealth-solutions"],
+      health: ["health-judgement", "health-strengths", "health-warnings", "health-solutions"]
+    };
+
+    const ids = sectionIds[type];
+    const lib = adviceLib[type]?.[element];
+
+    if (!lib) {
+      ids.forEach(id => document.getElementById(id).innerText = "Insights coming soon...");
+      return;
+    }
+
+    const renderList = (arr, id) => {
+      const html = arr.map((line, i) => `<p>${i + 1}. ${line}</p>`).join("");
+      document.getElementById(id).innerHTML = html;
+    };
+
+    renderList(lib.judgement, ids[0]);
+    renderList(lib.strengths, ids[1]);
+    renderList(lib.warnings, ids[2]);
+    renderList(lib.solutions, ids[3]);
+  }
+
+  // 执行所有模块渲染
+  renderRadarChart(pillars.elements);
+  renderTrendChart(dominantElement);
+  renderLuckyColors(dominantElement);
+  renderPhilosophy();
+
+  renderAdvice(dominantElement, "love");
+  renderAdvice(dominantElement, "family");
+  renderAdvice(dominantElement, "career");
+  renderAdvice(dominantElement, "wealth");
+  renderAdvice(dominantElement, "health");
+
+  // 邮件发送逻辑
+  function sendReportToEmail() {
+    const email = document.getElementById("userEmail").value.trim();
+    if (!email || !email.includes("@")) {
+      document.getElementById("emailStatus").innerText = "⚠️ Please enter a valid email address.";
+      return;
+    }
+
+    const templateParams = {
+      user_name: userName,
+      birthdate: birthdate,
+      birthtime: birthtime,
+      birthplace: birthplace,
+      year_pillar: pillars.year,
+      month_pillar: pillars.month,
+      day_pillar: pillars.day,
+      hour_pillar: pillars.hour,
+      dominant_element: dominantElement,
+      element_summary: document.getElementById("element-summary").innerText,
+      love_advice: document.getElementById("love-judgement").innerText + "\n" +
+                   document.getElementById("love-strengths").innerText + "\n" +
+                   document.getElementById("love-warnings").innerText + "\n" +
+                   document.getElementById("love-solutions").innerText,
+      family_advice: document.getElementById("family-judgement").innerText + "\n" +
+                     document.getElementById("family-strengths").innerText + "\n" +
+                     document.getElementById("family-warnings").innerText + "\n" +
+                     document.getElementById("family-solutions").innerText,
+      career_advice: document.getElementById("career-judgement").innerText + "\n" +
+                     document.getElementById("career-strengths").innerText + "\n" +
+                     document.getElementById("career-warnings").innerText + "\n" +
+                     document.getElementById("career-solutions").innerText,
+      wealth_advice: document.getElementById("wealth-judgement").innerText + "\n" +
+                     document.getElementById("wealth-strengths").innerText + "\n" +
+                     document.getElementById("wealth-warnings").innerText + "\n" +
+                     document.getElementById("wealth-solutions").innerText,
+      health_advice: document.getElementById("health-judgement").innerText + "\n" +
+                     document.getElementById("health-strengths").innerText + "\n" +
+                     document.getElementById("health-warnings").innerText + "\n" +
+                     document.getElementById("health-solutions").innerText,
+      lucky_colors: document.getElementById("color-calendar").innerText,
+      philosophy: document.getElementById("philosophy-quote").innerText,
+      user_email: email
+    };
+
+    emailjs.send("service_t6fitnn", "template_2g3xle8", templateParams)
+      .then(() => {
+        document.getElementById("emailStatus").innerText = "✅ Report sent successfully. Please check your inbox.";
+      })
+      .catch(() => {
+        document.getElementById("emailStatus").innerText = "⚠️ Failed to send. Please try again later.";
+      });
+  }
+</script>
 </body>
 </html>
-function renderRadarChart(elements) {
-  new Chart(document.getElementById("elementChart"), {
-    type: "radar",
-    data: {
-      labels: Object.keys(elements),
-      datasets: [{
-        label: "Five Element Balance",
-        data: Object.values(elements),
-        backgroundColor: "rgba(199,167,108,0.2)",
-        borderColor: "#c7a76c",
-        pointBackgroundColor: "#c7a76c",
-        borderWidth: 2
-      }]
-    },
-    options: { responsive: true, scales: { r: { min: 0, max: 4 } } }
-  });
-}
-
-function renderTrendChart(dominant) {
-  const base = { Wood:2, Fire:3, Earth:2, Metal:3, Water:2 }[dominant] || 2;
-  const values = Array.from({length:30}, (_,i) => Math.max(1, base + Math.sin(i/4)*2));
-  new Chart(document.getElementById("trendChart"), {
-    type: "line",
-    data: {
-      labels: Array.from({length:30}, (_,i)=>`Day ${i+1}`),
-      datasets: [{
-        label: "Energy Index",
-        data: values,
-        borderColor: "#7b552c",
-        backgroundColor: "rgba(123,85,44,0.1)",
-        fill: true,
-        tension: 0.3
-      }]
-    },
-    options: { responsive: true }
-  });
-}
-
-function renderLuckyColors(dominant) {
-  const map = {
-    Wood: "🌿 Green / Sky Blue",
-    Fire: "🔥 Red / Coral",
-    Earth: "🟤 Brown / Beige",
-    Metal: "⚪ White / Silver",
-    Water: "🌊 Black / Navy Blue"
-  };
-  const color = map[dominant] || "🌈 Balanced Colors";
-  let html = "";
-  for (let i = 1; i <= 30; i++) {
-    html += `<p>Day ${i}: ${color}</p>`;
-  }
-  document.getElementById("color-calendar").innerHTML = html;
-}
-
-function renderPhilosophy() {
-  const quotes = [
-    "Balance is not a destination, but a rhythm you return to.",
-    "What you lack teaches you the most.",
-    "Elements flow, just like your journey.",
-    "Destiny is a draft — you hold the pen.",
-    "Five phases, infinite paths.",
-    "When Wood is too strong, the forest burns.",
-    "Even Water needs direction.",
-    "You are not your chart — but you are its voice.",
-    "Harmony is remembering, not controlling.",
-    "Let your nature guide your nurture."
-  ];
-  document.getElementById("philosophy-quote").innerHTML =
-    quotes.map(q => `<p>${q}</p>`).join("");
-}
-
-function renderAdvice(element, type, containerId) {
-  const base = {
-    love: ["You value emotional connection.", "You're devoted in love.", "You build intimacy slowly.", "You can be overly sensitive.", "Fear of rejection may hold you back."],
-    family: ["You care deeply for family.", "You're the emotional anchor.", "You provide stability and warmth.", "You sometimes suppress your needs.", "Boundaries are key."],
-    career: ["You are driven by purpose.", "You bring vision to your work.", "You adapt to challenges.", "You might hesitate to lead.", "You may avoid confrontation."],
-    wealth: ["You respect value over volume.", "You are thoughtful with spending.", "You attract stability.", "You may avoid risk too much.", "Over-saving may limit flow."],
-    warning: ["Balance is your challenge.", "You over-give.", "You hold too much.", "You wait too long.", "You fear change."]
-  };
-  const output = [];
-  for (let i = 0; i < 10; i++) {
-    output.push(`<p>${i+1}. ${base[type][0]}</p>`);
-    output.push(`<p>• ${base[type][1]}</p>`);
-    output.push(`<p>• ${base[type][2]}</p>`);
-    output.push(`<p>• ⚠️ ${base[type][3]}</p>`);
-    output.push(`<p>• ⚠️ ${base[type][4]}</p>`);
-  }
-  document.getElementById(containerId).innerHTML = output.join("");
-}
-
-function sendReportToEmail() {
-  const email = document.getElementById("userEmail").value.trim();
-  if (!email || !email.includes("@")) {
-    document.getElementById("emailStatus").innerText = "⚠️ Please enter a valid email address.";
-    return;
-  }
-
-  const templateParams = {
-    user_name: userName,
-    birthdate: birthdate,
-    birthtime: birthtime,
-    birthplace: birthplace,
-    year_pillar: pillars.year,
-    month_pillar: pillars.month,
-    day_pillar: pillars.day,
-    hour_pillar: pillars.hour,
-    dominant_element: dominantElement,
-    element_summary: document.getElementById("element-summary").innerText,
-    love_advice: document.getElementById("love-advice").innerText,
-    family_advice: document.getElementById("family-advice").innerText,
-    career_advice: document.getElementById("career-advice").innerText,
-    wealth_advice: document.getElementById("wealth-advice").innerText,
-    warning_advice: document.getElementById("warning-advice").innerText,
-    lucky_colors: document.getElementById("color-calendar").innerText,
-    philosophy: document.getElementById("philosophy-quote").innerText,
-    user_email: email
-  };
-
-  emailjs.send("service_t6fitnn", "template_2g3xle8", templateParams)
-    .then(() => {
-      document.getElementById("emailStatus").innerText = "✅ Report sent successfully. Please check your inbox.";
-    })
-    .catch(() => {
-      document.getElementById("emailStatus").innerText = "⚠️ Failed to send. Please try again later.";
-    });
-}
