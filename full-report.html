@@ -303,22 +303,49 @@
   </script>
 <script>
   function renderRadarChart(elements) {
-    new Chart(document.getElementById("elementChart"), {
-      type: "radar",
-      data: {
-        labels: Object.keys(elements),
-        datasets: [{
-          label: "Five Element Balance",
-          data: Object.values(elements),
-          backgroundColor: "rgba(199,167,108,0.2)",
-          borderColor: "#c7a76c",
-          pointBackgroundColor: "#c7a76c",
-          borderWidth: 2
-        }]
-      },
-      options: { responsive: true, scales: { r: { min: 0, max: 4 } } }
-    });
+  const ctx = document.getElementById("elementChart");
+
+  if (!ctx || !elements) {
+    console.warn("⚠️ Missing canvas or element data for radar chart.");
+    return;
   }
+
+  const dataValues = [
+    elements.Wood || 0,
+    elements.Fire || 0,
+    elements.Earth || 0,
+    elements.Metal || 0,
+    elements.Water || 0
+  ];
+
+  new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: ["Wood", "Fire", "Earth", "Metal", "Water"],
+      datasets: [{
+        label: "Five Element Balance",
+        data: dataValues,
+        backgroundColor: "rgba(199,167,108,0.2)",
+        borderColor: "#c7a76c",
+        pointBackgroundColor: "#c7a76c",
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          min: 0,
+          max: 5,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      }
+    }
+  });
+}
+
 
   function renderTrendChart(dominant) {
     const base = { Wood: 2, Fire: 3, Earth: 2, Metal: 3, Water: 2 }[dominant] || 2;
