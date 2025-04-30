@@ -109,41 +109,41 @@ function todaysFocus(el) {
 // 命理五维度
 function loveAdvice(el) {
   return {
-    Wood: "You seek deep connection through shared ideals. Beware of overgiving.",
-    Fire: "You love passionately and instantly—slowing down reveals depth.",
-    Earth: "You are loyal but reserved—speak more of what you feel.",
-    Metal: "You're protective in love—let softness guide your strength.",
-    Water: "Your love runs deep—balance emotion with boundaries."
-  }[el];
-}
-
-function careerAdvice(el) {
-  return {
-    Wood: "Creative fields, teaching, or social causes suit your ideals.",
-    Fire: "Leadership, entrepreneurship, or media tap into your drive.",
-    Earth: "Management, property, or consulting reward your stability.",
-    Metal: "Law, tech, or finance align with your structure and sharpness.",
-    Water: "Travel, psychology, and research fit your fluid intelligence."
-  }[el];
-}
-
-function wealthAdvice(el) {
-  return {
-    Wood: "Wealth grows like a tree—consistency matters.",
-    Fire: "You earn quickly—channel it wisely.",
-    Earth: "Wealth accumulates steadily over time.",
-    Metal: "You plan and protect wealth best when disciplined.",
-    Water: "You sense financial opportunities—ride waves, but don’t chase storms."
+    Wood: "As a Wood type, you love through growth and support. You bring nurturing energy and emotional generosity to relationships. Your ideals often inspire partners. However, you may overextend emotionally and expect the same growth from others. Avoid trying to shape someone else's path too forcefully.",
+    Fire: "With dominant Fire energy, your love is intense and passionate. You're magnetic, expressive, and emotionally engaging. You create unforgettable romantic moments. However, your emotions can burn too fast or too strong. Learn to slow down and truly understand your partner’s rhythm.",
+    Earth: "Earth elements love through consistency and loyalty. You provide grounding, patience, and long-term dedication. Your love is dependable and emotionally stable. Yet, you may suppress emotional needs or expect unspoken understanding. Open communication is vital—don't assume silence equals peace.",
+    Metal: "Metal types express love with depth and discipline. You're protective and highly respectful of boundaries. Your love is serious and committed. However, you can be emotionally reserved and hard to read. Practice vulnerability—love doesn't always need rules.",
+    Water: "Water-dominant types seek soul-level connection. You intuitively understand partners and love with fluid sensitivity. You are deeply devoted and emotionally present. Still, your moods can shift, and boundaries may blur. Learn to protect your own emotional flow while loving others."
   }[el];
 }
 
 function familyAdvice(el) {
   return {
-    Wood: "You're the change-bringer—share roots, not just wings.",
-    Fire: "You inspire but must pause to hear others.",
-    Earth: "You're the rock—just remember to rest too.",
-    Metal: "Standards are good—empathy makes them better.",
-    Water: "You feel family deeply—guard your energy."
+    Wood: "Wood elements value growth and shared experiences in family. You foster learning, development, and support within the home. Your family ties are built on encouragement and mutual upliftment. However, you may impose ideals too strongly or avoid confrontation. Allow differences to coexist without needing resolution.",
+    Fire: "Fire types bring joy, action, and drama into family life. You inspire passion and boldness in loved ones. You're often the emotional heartbeat of your household. Yet, your reactions can be intense, and tempers may flare quickly. Practice listening without reacting—warmth doesn't need to burn.",
+    Earth: "Earth energy emphasizes duty and stability in family. You are the emotional pillar—reliable, present, and nurturing. Others lean on your calm. But you may carry too much responsibility or avoid change for comfort. Share burdens and allow space for evolution within family roles.",
+    Metal: "Metal types seek structure, tradition, and respect in family. You hold high standards and deeply value heritage. Your loyalty is unwavering. However, rigidity may stifle emotional expression or growth. Invite messiness—it brings life into the framework.",
+    Water: "Water elements create emotional connection within family. You are deeply attuned to others' feelings and emotional needs. Your home is often a sanctuary of compassion. Still, you may absorb others’ pain too easily or avoid directness. Set emotional filters to protect your peace."
+  }[el];
+}
+
+function careerAdvice(el) {
+  return {
+    Wood: "Wood types thrive in careers tied to growth and innovation. You excel in education, design, health, or social change. You’re future-focused and value meaningful impact. However, scattered focus or stubborn idealism may limit progress. Stay rooted while reaching upward.",
+    Fire: "Fire energy suits dynamic, expressive, or leadership roles. You perform well in entertainment, marketing, politics, or entrepreneurship. Your enthusiasm ignites teams and visions. Yet, impulsivity and overconfidence can derail long-term goals. Temper passion with patience.",
+    Earth: "Earth types are strong in structured and support-oriented careers. You succeed in logistics, consulting, finance, or agriculture. Your reliability builds long-term success. Still, fear of risk or clinging to routine may stagnate growth. Learn to innovate steadily.",
+    Metal: "Metal elements fit roles requiring precision, integrity, or justice. You do well in law, strategy, technology, or quality control. You bring excellence and high standards. But excessive perfectionism or emotional distance may alienate others. Balance rigor with warmth.",
+    Water: "Water types flow in intellectual and creative fields. You thrive in writing, psychology, travel, research, or diplomacy. You adapt and understand complexity. Yet, emotional overwhelm or indecision can cloud execution. Anchor your flow with clear milestones."
+  }[el];
+}
+
+function wealthAdvice(el) {
+  return {
+    Wood: "Wood elements build wealth gradually through expansion. You earn best when growing meaningful projects or nurturing others. Your efforts often yield long-term abundance. But overextension or inconsistent pacing can cause burnout. Plan growth with sustainability in mind.",
+    Fire: "Fire types create wealth through bold action and charisma. You shine in fast-moving markets, promotions, and influence. You generate quick income bursts. Still, lack of structure or hasty spending may drain success. Budgeting is your fire extinguisher—use it.",
+    Earth: "Earth energy accumulates wealth through stability and planning. You are cautious, consistent, and resourceful. Your savings often reflect strong discipline. However, excessive frugality or fear of risk can stall expansion. Allow strategic risks to grow your foundation.",
+    Metal: "Metal types approach wealth with analysis and precision. You excel in finance, investing, and systems optimization. Profit is earned through structure. Yet, obsessing over control or fear of failure may limit returns. Welcome flexibility as a profit multiplier.",
+    Water: "Water elements attract wealth through insight and movement. You thrive in international, online, or fluid income models. Money flows when you're aligned emotionally. But disorganization or escapism can block gains. Ground your ideas with action plans and accountability."
   }[el];
 }
 
