@@ -1,21 +1,108 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>支付成功</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Success – Feng Shui Report</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #f9f6f1, #e7dfd4);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      padding: 40px 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #6b4c27;
+      margin-bottom: 10px;
+    }
+
+    .icon {
+      font-size: 50px;
+      color: #56a364;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 10px 0 20px;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      padding: 14px 24px;
+      background-color: #c7a76c;
+      color: white;
+      font-size: 17px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #b18d57;
+    }
+
+    .small-text {
+      font-size: 13px;
+      color: #888;
+      margin-top: 25px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 22px; }
+      .cta-button { font-size: 16px; padding: 12px 18px; }
+    }
+  </style>
 </head>
 <body>
-  <h2>🎉 支付成功！</h2>
-  <p>感谢您的购买，完整版风水报告即将为您生成。</p>
+  <div class="container">
+    <div class="icon">🎉</div>
+    <h1>Payment Successful</h1>
+    <p>Thank you! Your personalized Feng Shui report is now being prepared based on your birth details.</p>
+    <p>You can now access your full report below.</p>
 
-  <p>👉 请点击下方按钮开始查看您的专属报告：</p>
+    <button class="cta-button" onclick="redirectToReport()">View My Full Report</button>
 
-  <button onclick="redirectToReport()">查看完整版报告</button>
+    <div class="small-text">
+      🔒 Your information is secure. This is a one-time purchase.<br/>
+      You can revisit your report anytime using the same link.
+    </div>
+  </div>
 
   <script>
+    function getParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: params.get("name") || "",
+        birthdate: params.get("birthdate") || "",
+        birthtime: params.get("birthtime") || "",
+        birthplace: params.get("birthplace") || ""
+      };
+    }
+
     function redirectToReport() {
-      // 跳转到完整版报告页面（此处可加参数）
-      window.location.href = "/full-report.html";
+      const params = getParams();
+      const reportURL = `/pages/full-report?name=${encodeURIComponent(params.name)}&birthdate=${encodeURIComponent(params.birthdate)}&birthtime=${encodeURIComponent(params.birthtime)}&birthplace=${encodeURIComponent(params.birthplace)}`;
+      window.location.href = reportURL;
     }
   </script>
 </body>
