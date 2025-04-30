@@ -1669,6 +1669,7 @@ function renderAdvice(element, type) {
   }
 
   // 执行所有模块渲染
+window.addEventListener('DOMContentLoaded', () => {
   renderRadarChart(pillars.elements);
   renderTrendChart(dominantElement);
   renderLuckyColors(dominantElement);
@@ -1679,6 +1680,8 @@ function renderAdvice(element, type) {
   renderAdvice(dominantElement, "career");
   renderAdvice(dominantElement, "wealth");
   renderAdvice(dominantElement, "health");
+});
+
 
   // 邮件发送逻辑
   function sendReportToEmail() {
