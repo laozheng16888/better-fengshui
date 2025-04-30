@@ -1,24 +1,148 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>购买完整版风水报告</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout – Feng Shui Destiny Report</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #fdfaf6, #f0e8dd);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      padding: 30px 25px;
+      margin-top: 30px;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #8c6239;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      color: #d67d00;
+      font-weight: bold;
+    }
+
+    p {
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+
+    .price-box {
+      background-color: #f7f2ea;
+      border-left: 5px solid #c79d59;
+      padding: 15px 20px;
+      margin: 20px 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #c7a76c;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .cta-button:hover {
+      background-color: #b18e57;
+    }
+
+    .secure {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .secure img {
+      width: 100px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .price-box {
+        font-size: 16px;
+      }
+
+      .cta-button {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>完整版风水报告 ¥68 / $9.90</h2>
-  <p>请确认付款以解锁您的个性化完整版风水命理解读。</p>
+  <div class="container">
+    <h1>Your Personalized Feng Shui Destiny Awaits</h1>
+    <p>Based on your exact birth details, this <span class="highlight">exclusive report</span> reveals:</p>
+    <ul>
+      <li>🌟 Full Four Pillars of Destiny (BaZi)</li>
+      <li>❤️ Love & Family Tendencies</li>
+      <li>💼 Career & Wealth Guidance</li>
+      <li>🎯 Daily Advice, Lucky Color & Philosophical Insight</li>
+    </ul>
 
-  <!-- PayPal支付按钮 -->
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-    <input type="hidden" name="cmd" value="_xclick">
-    <input type="hidden" name="business" value="zhangwenwenhainan@gmail.com">
-    <input type="hidden" name="item_name" value="完整版风水命理报告">
-    <input type="hidden" name="amount" value="9.90">
-    <input type="hidden" name="currency_code" value="USD">
-    <input type="hidden" name="return" value="https://letter-fengshui.vercel.app/success.html">
-    <input type="submit" value="立即付款获取完整版报告">
-  </form>
+    <div class="price-box">
+      One-Time Fee: <span class="highlight">$9.90</span><br/>
+      No subscription. No hidden charges.
+    </div>
 
-  <p>付款后系统将自动跳转查看完整版报告。</p>
+    <button class="cta-button" onclick="redirectToPayPal()">Pay with PayPal</button>
+
+    <div class="secure">
+      🔒 Secure checkout powered by PayPal<br/>
+      <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal Logo"/>
+    </div>
+  </div>
+
+  <script>
+    function getParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: params.get("name") || "",
+        birthdate: params.get("birthdate") || "",
+        birthtime: params.get("birthtime") || "",
+        birthplace: params.get("birthplace") || ""
+      };
+    }
+
+    function redirectToPayPal() {
+      const params = getParams();
+      const checkoutURL = `/success.html?name=${encodeURIComponent(params.name)}&birthdate=${encodeURIComponent(params.birthdate)}&birthtime=${encodeURIComponent(params.birthtime)}&birthplace=${encodeURIComponent(params.birthplace)}`;
+      // In production: redirect to PayPal payment page
+      window.location.href = checkoutURL;
+    }
+  </script>
 </body>
 </html>
